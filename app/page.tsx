@@ -1,6 +1,33 @@
+import axios from "axios";
 import Image from "next/image";
 
 export default function Home() {
+  const fetchData = async () => {
+    // try {
+    const response = await axios.get(
+      "https://cloud.appwrite.io/v1/databases/65bea692defb4ac174b5/collections/65ca909e17dbfeda3482/documents",
+      {
+        headers: {
+          "X-Appwrite-Project": "65132bbcaa49f6f7a7d0", // پروژه ID صحیح خود را استفاده کنید
+        },
+      }
+    );
+    console.log(response.data.total);
+  };
+  // catch (error: unknown) {
+  //   // تبدیل error به نوع قابل استفاده
+  //   if (axios.isAxiosError(error)) {
+  //     console.error("Error fetching data:", error.response?.data);
+  //   } else {
+  //     console.error(
+  //       "An unexpected error occurred:",
+  //       (error as Error).message
+  //     );
+  //   }
+  // }
+  // };
+
+  fetchData();
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
