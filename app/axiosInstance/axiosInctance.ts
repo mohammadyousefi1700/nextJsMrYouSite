@@ -1,11 +1,15 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL:
-    "https://cloud.appwrite.io/v1/databases/65bea692defb4ac174b5/collections/65ca909e17dbfeda3482/documents",
+  baseURL: `${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}`,
   headers: {
-    "X-Appwrite-Project": "65132bbcaa49f6f7a7d0", // پروژه ID صحیح خود را استفاده کنید
+    "X-Appwrite-Project": process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID,
+    "Content-Type": "application/json",
   },
 });
 
-axiosInstance.interceptors.request.use();
+axiosInstance.interceptors.request.use((config) => {
+  return config;
+});
+
+export default axiosInstance;
