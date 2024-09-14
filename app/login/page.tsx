@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import Image from "next/image";
 import Logo from "../../public/logo.png";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "صحفه ورود",
@@ -21,9 +22,11 @@ export default function LoginPage() {
       })
       .then((response) => {
         cookies().set("whoAmI", response.headers["set-cookie"][0]);
-      });
-  }
+      })
+      .catch((err) => console.log(err));
 
+    redirect("/");
+  }
   return (
     <div className="w-full flex flex-col bg-slate-900 p-2 justify-center  items-center !h-screen text-center align-bottom">
       <form
@@ -55,12 +58,17 @@ export default function LoginPage() {
           required
         />
         <button
-          className="border-yellow-500 text-yellow-400 p-2 rounded-lg border-2"
+          className="border-yellow-500 hover:text-yellow-100 hover:border-yellow-100 text-yellow-400 p-2 rounded-lg border-2"
           type="submit"
         >
           ورود
         </button>
-        <Link href={""}></Link>
+        <Link
+          className=" text-yellow-400  hover:text-yellow-100"
+          href={"/signUp"}
+        >
+          ثبت نام
+        </Link>
       </form>
     </div>
   );

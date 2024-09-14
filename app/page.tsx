@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import axiosInstance from "./axiosInstance/axiosInctance";
-import { FetchData } from "./components/FetchData";
 import Card from "./dashboard/components/PageComponent/mainPageComponent/Card";
+import { FetchData } from "./components/FetchData";
 export const revalidate = 60; // revalidate at most every hour
 
 type Document = {
@@ -34,8 +34,8 @@ export default function Home() {
 
       {
         headers: {
-          Cookie:
-            "a_session_65132bbcaa49f6f7a7d0=eyJpZCI6IjY2Y2MzNTM2NDE4YjI3MWY0MjE0Iiwic2VjcmV0IjoiMmIzODdhNzYyZTA4Zjk0M2MzYjc4OWEwMTBmOGE4YmM3NDNiOTM3YmY1MDEyMWVjMzAyNGI3Yzc2ZWM5MmM4YjA2ZTlmMzE1YjhjNzk5NzBiZWE3NmFkYTJjN2U5YmUwYWNlMTUzNDg4NWU1NWU2ZWQ4MjBkZjA3YzlmYTdhZGM3N2U2MWQwYzIxMDUxZWQ5NDc4YjQ4MGU5ZGVmOWJjZmRhZDBhNzVlMmZlOTZlMzRmMGNjOTczZTNlZjRhMmJlMzI0MjlhYjE2YzU3OGQ1ZWNlMTljOTU4MDNlNjdjZGM2NzVkNzY5ZDI1NTI0ODA5N2IzZjZhOWI2NDJmNzJiZiJ9",
+          // Cookie:
+          //   "a_session_65132bbcaa49f6f7a7d0=eyJpZCI6IjY2Y2MzNTM2NDE4YjI3MWY0MjE0Iiwic2VjcmV0IjoiMmIzODdhNzYyZTA4Zjk0M2MzYjc4OWEwMTBmOGE4YmM3NDNiOTM3YmY1MDEyMWVjMzAyNGI3Yzc2ZWM5MmM4YjA2ZTlmMzE1YjhjNzk5NzBiZWE3NmFkYTJjN2U5YmUwYWNlMTUzNDg4NWU1NWU2ZWQ4MjBkZjA3YzlmYTdhZGM3N2U2MWQwYzIxMDUxZWQ5NDc4YjQ4MGU5ZGVmOWJjZmRhZDBhNzVlMmZlOTZlMzRmMGNjOTczZTNlZjRhMmJlMzI0MjlhYjE2YzU3OGQ1ZWNlMTljOTU4MDNlNjdjZGM2NzVkNzY5ZDI1NTI0ODA5N2IzZjZhOWI2NDJmNzJiZiJ9",
           "Content-Type": "application/json",
           Accept: "application/json",
         },
@@ -72,24 +72,9 @@ export default function Home() {
   // fetchData1();
   // Promise.resolve([fetchData(), fetchData1()]);
 
-  // async function createSessionClient(formData) {
-  //   "use server";
-  //   const data = Object.fromEntries(formData);
-  //   const { email, password } = data;
-  //   await axiosInstance
-  //     .post("/account/sessions/email", {
-  //       email,
-  //       password,
-  //     })
-  //     .then((response) => {
-  //       // console.log(response.headers["set-cookie"]);
-  //       cookies().set("whoAmI", response.headers["set-cookie"][0]);
-  //     });
-  // }
   return (
     <FetchData request={fetchData}>
       {(data: DataResponse) => {
-        // console.log("data", data);
         return (
           <div className="w-full mb-3">
             <section className=" flex w-full h-full items-center justify-center flex-wrap gap-x-5">
