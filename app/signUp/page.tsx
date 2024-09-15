@@ -91,7 +91,6 @@ import axiosInstance from "../axiosInstance/axiosInctance";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Logo from "../../public/logo.png";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ID } from "node-appwrite";
 
@@ -101,7 +100,6 @@ export const metadata: Metadata = {
 };
 
 export default async function SignUpPage() {
-  const id = ID.unique;
   async function createSessionClient(formData) {
     "use server";
     const data = Object.fromEntries(formData);
@@ -120,7 +118,7 @@ export default async function SignUpPage() {
         console.log("response", response);
       })
       .catch((err) => console.log(err))
-      .then((res) => {
+      .then(() => {
         setTimeout(
           () =>
             axiosInstance
