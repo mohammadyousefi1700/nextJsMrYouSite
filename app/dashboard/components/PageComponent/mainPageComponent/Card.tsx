@@ -18,11 +18,11 @@ type Props = {
 
 function Card(Prop: Props) {
   const { data, index } = Prop;
-  const tdClass = "w-full";
+  const tdClass = "w-full ";
 
   return (
     <Link
-      className="flex min-w-7 flex-col items-center outline-none cursor-pointer w-full h-full  shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] transition-transform transform hover:scale-105"
+      className="flex min-w-7 flex-col overflow-hidden font-normal text-lg items-center rounded-xl outline-none cursor-pointer w-full h-full  shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] transition-transform transform hover:scale-105"
       key={index}
       href={`/products/${data.$id}`}
     >
@@ -32,7 +32,7 @@ function Card(Prop: Props) {
           src={data.images}
           alt={data.productName}
         />
-        <div className="flex  flex-col w-full ">
+        <div className="flex  flex-col w-full font-normal text-lg ">
           <span className={tdClass}> نام کالا : {data.productName}</span>
           <span className={tdClass}> قیمت : {data.price}</span>
           <span className={tdClass}> مکان : {data.location}</span>

@@ -3,6 +3,7 @@ import axiosInstance from "./axiosInstance/axiosInctance";
 import Card from "./dashboard/components/PageComponent/mainPageComponent/Card";
 import { FetchData } from "./components/FetchData";
 import Search from "./components/Search/search";
+import { Query } from "node-appwrite";
 
 export const revalidate = 60; // revalidate at most every hour
 
@@ -22,7 +23,6 @@ type Document = {
   $collectionId: string;
 };
 
-// تعریف تایپ برای داده‌های کل
 type DataResponse = {
   total: number;
   documents: Document[];
@@ -31,31 +31,41 @@ type DataResponse = {
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: { query: string };
 }) {
-  console.log(searchParams);
+  const fetchData = async (query: string) => {
+    const searchQuery = query || "";
 
-  const fetchData = async () => {
-    // try {
-    const response = await axiosInstance.get(
-      `/databases/${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}/collections/${process.env.NEXT_PUBLIC_APPWRITE_POST}/documents`,
+    const queryBackend = [
+      Query.startsWith("productName", searchQuery),
+      Query.limit(50),
+      Query.orderDesc("$createdAt"),
+      Query.offset(1),
+    ];
 
-      {
-        headers: {
-          // Cookie:
-          //   "a_session_65132bbcaa49f6f7a7d0=eyJpZCI6IjY2Y2MzNTM2NDE4YjI3MWY0MjE0Iiwic2VjcmV0IjoiMmIzODdhNzYyZTA4Zjk0M2MzYjc4OWEwMTBmOGE4YmM3NDNiOTM3YmY1MDEyMWVjMzAyNGI3Yzc2ZWM5MmM4YjA2ZTlmMzE1YjhjNzk5NzBiZWE3NmFkYTJjN2U5YmUwYWNlMTUzNDg4NWU1NWU2ZWQ4MjBkZjA3YzlmYTdhZGM3N2U2MWQwYzIxMDUxZWQ5NDc4YjQ4MGU5ZGVmOWJjZmRhZDBhNzVlMmZlOTZlMzRmMGNjOTczZTNlZjRhMmJlMzI0MjlhYjE2YzU3OGQ1ZWNlMTljOTU4MDNlNjdjZGM2NzVkNzY5ZDI1NTI0ODA5N2IzZjZhOWI2NDJmNzJiZiJ9",
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    );
-    return await response.data;
+    try {
+      const response = await axiosInstance.get(
+        `/databases/${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}/collections/${process.env.NEXT_PUBLIC_APPWRITE_POST}/documents`,
+        {
+          params: {
+            queries: queryBackend,
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      return { documents: [] };
+    }
   };
-
   return (
     <>
       <Search />
-      <FetchData request={fetchData}>
+      <FetchData request={() => fetchData(searchParams.query)}>
         {(data: DataResponse) => {
           return (
             <div className="w-full mb-3">
