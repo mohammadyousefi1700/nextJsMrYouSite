@@ -32,16 +32,15 @@ type DataResponse = {
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { query: string };
+  searchParams: { query: string; currentPage?: string };
 }) {
   const fetchData = async (query: string) => {
     const searchQuery = query || "";
-
     const queryBackend = [
       Query.startsWith("productName", searchQuery),
-      Query.limit(5),
+      Query.limit(50),
       Query.orderDesc("$createdAt"),
-      Query.offset(1),
+      Query.offset(Number(searchParams.currentPage)),
     ];
 
     try {
@@ -57,8 +56,6 @@ export default async function Home({
           },
         }
       );
-      console.log(response.data);
-
       return response.data;
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -81,8 +78,13 @@ export default async function Home({
                   ) : (
                     <div>موردی برای نمایش وجود ندارد</div>
                   )}
-                  <Pagination total={4} onchange={() => {}} />
                 </div>
+                {data.total > 50 ? (
+                  <Pagination
+                    current={Number(searchParams.currentPage)}
+                    total={Number(data?.total || 1) / Number(19)}
+                  />
+                ) : null}
               </section>
             </div>
           );

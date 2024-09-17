@@ -20,7 +20,6 @@ function Search() {
     [searchParams]
   );
   useEffect(() => {
-    // const newQueryString = `${createQueryString("query", query)}&${createQueryString("sort", sortOrder)}`;
     const newQueryString = `${createQueryString("query", query)}`;
     router.push(pathname + "?" + newQueryString);
   }, [router, query, pathname, createQueryString]);

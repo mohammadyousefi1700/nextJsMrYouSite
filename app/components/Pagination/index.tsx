@@ -1,11 +1,20 @@
+"use client";
+
 import classNames from "clsx";
-import { AllHTMLAttributes, DetailedHTMLProps } from "react";
+import {
+  AllHTMLAttributes,
+  DetailedHTMLProps,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 import { arrowsClassName, boxNumberClassName } from "./classNames";
 import NumberBox from "./NumberBox";
 import { PropType } from "./type";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
-// -------------------colors--------------
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+// // -------------------colors--------------
 const darkPurple = "#5F41B2";
 const lightPurple = "#C0B8E3";
 const gray = "#1e252b73";
@@ -21,19 +30,39 @@ const Pagination = (
     arrowsClassName2,
     total,
     current,
-    onchange,
     className,
     theme = "purple",
     numberClassName2,
   } = props;
 
+  const [currentPage, setCurrentPage] = useState(current || 1); // استفاده از useState برای مدیریت صفحه فعلی
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  useEffect(() => {
+    const newQueryString = `${createQueryString(
+      "currentPage",
+      String(currentPage) === "NaN" || undefined ? "1" : String(currentPage)
+    )}`;
+    router.push(pathname + "?" + newQueryString);
+  }, [router, pathname, createQueryString, currentPage]); // currentPage را به dependency اضافه کنید
+
   const pageNumbers = Array.from(Array(Math.ceil(total) + 1).keys());
 
   const changePage = (pageNumber: number) => {
-    if (total)
-      if (pageNumber > 0 && pageNumber - 1 < total) {
-        onchange(pageNumber);
-      }
+    if (pageNumber > 0 && pageNumber <= total) {
+      setCurrentPage(pageNumber); // اینجا صفحه فعلی را به‌روزرسانی کنید
+    }
   };
 
   const handleNumbersBetweenDots = () => {
@@ -41,31 +70,31 @@ const Pagination = (
       return [1];
     } else if (pageNumbers[-1] <= 3) {
       return Array.from({ length: total }, (_, i) => i + 1);
-    } else if (current === 1) {
-      return pageNumbers.slice(current - 1, current + 3);
-    } else if (current === pageNumbers.length - 1) {
-      return pageNumbers.slice(current - 2);
+    } else if (currentPage === 1) {
+      return pageNumbers.slice(currentPage - 1, currentPage + 3);
+    } else if (currentPage === pageNumbers.length - 1) {
+      return pageNumbers.slice(currentPage - 2);
     } else {
-      return pageNumbers.slice(current - 2, current + 3);
+      return pageNumbers.slice(currentPage - 2, currentPage + 3);
     }
   };
 
   const parseStartArrowColor = () => {
     if (theme === "purple") {
-      if (current === 1) return lightPurple;
+      if (currentPage === 1) return lightPurple;
       else return darkPurple;
     } else if (theme === "blue") {
-      if (current === 1) return gray;
+      if (currentPage === 1) return gray;
       else return blue;
     }
   };
 
   const parseEndArrowColor = () => {
     if (theme === "purple") {
-      if (current === total) return lightPurple;
+      if (currentPage === total) return lightPurple;
       else return darkPurple;
     } else if (theme === "blue") {
-      if (current === total) return gray;
+      if (currentPage === total) return gray;
       else return blue;
     }
   };
@@ -85,12 +114,12 @@ const Pagination = (
               className={classNames(
                 arrowsClassName2 ? arrowsClassName2 : arrowsClassName
               )}
-              onClick={() => changePage(current - 1)}
+              onClick={() => changePage(currentPage - 1)}
             >
               <GoArrowRight className="text-white" />
             </span>
             <div className={"flex flex-row mx-[0.875rem] "}>
-              {current >= 4
+              {currentPage >= 4
                 ? pageNumbers
                     .slice(1, 2)
                     .map((pageNumber: number, index: number) => (
@@ -99,14 +128,14 @@ const Pagination = (
                         key={index}
                         numberClassName2={numberClassName2}
                         pageNumber={pageNumber}
-                        currentPage={current}
+                        currentPage={currentPage}
                         pageChange={() => {
                           changePage(pageNumber);
                         }}
                       />
                     ))
                 : null}
-              {current <= 4 ? null : (
+              {currentPage <= 4 ? null : (
                 <div
                   className={classNames(
                     boxNumberClassName2
@@ -124,14 +153,14 @@ const Pagination = (
                     key={index}
                     numberClassName2={numberClassName2}
                     pageNumber={pageNumber}
-                    currentPage={current}
+                    currentPage={currentPage}
                     pageChange={() => {
                       changePage(pageNumber);
                     }}
                   />
                 )
               )}
-              {pageNumbers.length - current <= 4 ? null : (
+              {pageNumbers.length - currentPage <= 4 ? null : (
                 <div
                   className={classNames(
                     boxNumberClassName2
@@ -142,7 +171,7 @@ const Pagination = (
                   ...
                 </div>
               )}
-              {current >= pageNumbers.length - 3
+              {currentPage >= pageNumbers.length - 3
                 ? null
                 : pageNumbers
                     .slice(pageNumbers.length - 1)
@@ -152,7 +181,7 @@ const Pagination = (
                         numberClassName2={numberClassName2}
                         key={index}
                         pageNumber={pageNumber}
-                        currentPage={current}
+                        currentPage={currentPage}
                         pageChange={() => {
                           changePage(pageNumber);
                         }}
@@ -165,7 +194,7 @@ const Pagination = (
               className={classNames(
                 arrowsClassName2 ? arrowsClassName2 : arrowsClassName
               )}
-              onClick={() => changePage(current + 1)}
+              onClick={() => changePage(currentPage + 1)}
             >
               <GoArrowLeft className="text-white w-7 h-5" />
             </span>
