@@ -4,6 +4,7 @@ import Card from "./dashboard/components/PageComponent/mainPageComponent/Card";
 import { FetchData } from "./components/FetchData";
 import Search from "./components/Search/search";
 import { Query } from "node-appwrite";
+import Pagination from "./components/Pagination";
 
 export const revalidate = 60; // revalidate at most every hour
 
@@ -38,7 +39,7 @@ export default async function Home({
 
     const queryBackend = [
       Query.startsWith("productName", searchQuery),
-      Query.limit(50),
+      Query.limit(5),
       Query.orderDesc("$createdAt"),
       Query.offset(1),
     ];
@@ -56,6 +57,8 @@ export default async function Home({
           },
         }
       );
+      console.log(response.data);
+
       return response.data;
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -78,6 +81,7 @@ export default async function Home({
                   ) : (
                     <div>موردی برای نمایش وجود ندارد</div>
                   )}
+                  <Pagination total={4} onchange={() => {}} />
                 </div>
               </section>
             </div>

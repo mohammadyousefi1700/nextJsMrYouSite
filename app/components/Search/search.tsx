@@ -1,18 +1,29 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 import { useDebounce } from "use-debounce";
 
 function Search() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [text, setText] = useState<string>("");
-  const [query] = useDebounce(text, 1000);
 
+  const [query] = useDebounce(text, 1000);
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
   useEffect(() => {
-    router.push(query.length > 1 ? `/?query=${query}` : "/");
-  }, [router, query]);
-  console.log(text);
+    // const newQueryString = `${createQueryString("query", query)}&${createQueryString("sort", sortOrder)}`;
+    const newQueryString = `${createQueryString("query", query)}`;
+    router.push(pathname + "?" + newQueryString);
+  }, [router, query, pathname, createQueryString]);
 
   return (
     <div className="w-full flex justify-center my-5">
