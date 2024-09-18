@@ -5,6 +5,7 @@ import { FetchData } from "./components/FetchData";
 import Search from "./components/Search/search";
 import { Query } from "node-appwrite";
 import Pagination from "./components/Pagination";
+import { cookies } from "next/headers";
 
 export const revalidate = 60; // revalidate at most every hour
 
@@ -34,13 +35,20 @@ export default async function Home({
 }: {
   searchParams: { query: string; currentPage?: string };
 }) {
+  const user = cookies().get("whoAmI");
+  console.log(user);
+
   const fetchData = async (query: string) => {
     const searchQuery = query || "";
     const queryBackend = [
       Query.startsWith("productName", searchQuery),
       Query.limit(50),
       Query.orderDesc("$createdAt"),
-      Query.offset(Number(searchParams.currentPage)),
+      Query.offset(
+        Number(
+          searchParams.currentPage === undefined ? 1 : searchParams.currentPage
+        )
+      ),
     ];
 
     try {

@@ -6,8 +6,8 @@
 //   //   );
 
 // import auth from "@/app/auth";
-import Image from "next/image";
-import profilePic from "../../../public/download.ico";
+// import Image from "next/image";
+// import profilePic from "../../../public/download.ico";
 import Link from "next/link";
 // import MenuDropDown from "../DropDown/dropDown";
 // import {
