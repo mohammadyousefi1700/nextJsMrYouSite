@@ -30,12 +30,22 @@ export async function FetchData<T>({
   let loading = true;
 
   try {
-    data = await request(abortController.signal);
+    // بررسی اینکه آیا `request` به درستی مقداردهی شده است یا خیر
+    if (typeof request !== "function") {
+      throw new Error("Request function is invalid or missing.");
+    }
 
+    data = await request(abortController.signal);
     loading = false;
+
+    // بررسی داده‌های نال یا undefined برای جلوگیری از درخواست‌های نامعتبر
+    if (!data) {
+      console.warn("Data is null or undefined, no request will be made.");
+    }
   } catch (err: any) {
     loading = false;
     error = err.toString();
+    console.error("Request failed with error:", error);
   }
 
   const state: StateType<T> = {
@@ -55,7 +65,7 @@ export async function FetchData<T>({
     return (
       <div
         className={clsx(
-          "w-[100%]  flex justify-center items-center ",
+          "w-[100%] flex justify-center items-center",
           loadingClassName
         )}
       >
@@ -68,8 +78,7 @@ export async function FetchData<T>({
   if (
     handleEmptyData &&
     !loading &&
-    //@ts-ignore
-    (data?.items ? data.items.length === 0 : data?.length === 0)
+    (data === null || (Array.isArray(data) && data.length === 0)) // بررسی داده‌های خالی
   ) {
     return (
       <div
@@ -82,6 +91,7 @@ export async function FetchData<T>({
       </div>
     );
   }
-  // Default return
+
+  // لاگ کردن وضعیت داده‌ها برای دیباگ بهتر
   return <>{typeof children === "function" ? children(data, state) : null}</>;
 }

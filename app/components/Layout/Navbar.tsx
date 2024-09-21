@@ -23,7 +23,7 @@ async function Navbar() {
   //   console.log(auth.user);
 
   return (
-    <header className="w-full flex jus justify-between h-10 text-[#fffb00] bg-[#0d0d0d]">
+    <header className="w-full top-0  z-50  flex fixed justify-between h-10 text-[#fffb00] bg-[#0d0d0d]">
       {/* <Image className="w-8 h-8 rounded-full" src={profilePic} alt="logo" /> */}
       <Link
         href={"/"}
