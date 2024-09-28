@@ -2,12 +2,13 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { subscribeWithSelector } from "zustand/middleware";
 import { persist } from "zustand/middleware";
-import { MainStateProduct } from "./type";
-export const useStore = create<MainStateProduct>()(
+import { Store } from "./type";
+import { createOrder } from "./order-customer";
+export const useStore = create<Store>()(
   persist(
     subscribeWithSelector(
       immer((...a) => ({
-        ...createCartSlice(...a),
+        ...createOrder(...a),
       }))
     ),
     {
