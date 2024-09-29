@@ -1,10 +1,10 @@
 import { CartState } from "./order-customer";
 
 export type Product = {
-  description: string;
-  location: string;
+  description: string | null;
+  location: string | null;
   price: string;
-  images: string;
+  images?: string | null;
   productName: string;
   category: string;
   $id: string;
@@ -19,8 +19,12 @@ export type ActionOrder = {
   getProductId: (productId: string) => CartProduct | undefined;
   setTotal: (total: number) => void;
   reset: () => void;
+  setTotalProductId: (ProductId: string) => void;
 };
-export type CartProduct = Product & { qty: number };
+export type CartProduct = Product & {
+  qty?: number | null | undefined;
+  totalProductId?: number | null | undefined;
+};
 
 export type MainStateProduct = {
   product: Product;

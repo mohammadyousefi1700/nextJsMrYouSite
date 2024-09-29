@@ -14,6 +14,7 @@ export type CartActions = {
   getProductId: (productId: string) => CartProduct | undefined;
   setTotal: (total: number) => void;
   reset: () => void;
+  setTotalProductId: (productId: string) => void;
 };
 
 const initialState: CartState = {
@@ -38,6 +39,8 @@ export const createOrder: StateCreator<
       );
       if (foundProduct) {
         foundProduct.qty += 1;
+        foundProduct.totalProductId +=
+          Number(foundProduct.price) * foundProduct.qty;
       }
     }),
 
@@ -51,6 +54,10 @@ export const createOrder: StateCreator<
           state.products.splice(foundIndex, 1);
         } else {
           state.products[foundIndex].qty -= 1;
+          state.products[foundIndex].totalProductId -= Number(
+            Number(state.products[foundIndex].price) /
+              state.products[foundIndex].qty
+          );
         }
       }
     });
@@ -59,9 +66,11 @@ export const createOrder: StateCreator<
   addProduct: (product) =>
     set((state) => {
       const foundProduct = state.products.find((p) => p.$id === product.$id);
-
       if (foundProduct) {
         foundProduct.qty += 1;
+        foundProduct.totalProductId += Number(
+          Number(foundProduct.price) * foundProduct.qty
+        );
       } else {
         state.products.push({ ...product, qty: 1 });
       }
@@ -74,13 +83,25 @@ export const createOrder: StateCreator<
       );
     }),
 
-  getProductId: (productId) =>
-    get().products.find((product) => product.$id === productId),
-
+  getProductId: (productId) => {
+    return get().products.find((product) => product.$id === productId);
+  },
   setTotal: (total) =>
     set((state) => {
       state.total = total;
     }),
+  setTotalProductId: (productId) => {
+    set((state) => {
+      const foundProductId = state.products.find(
+        (product) => product.$id === productId
+      );
+      if (foundProductId) {
+        foundProductId.totalProductId += Number(
+          Number(foundProductId.price) * foundProductId.qty
+        );
+      }
+    });
+  },
 
   reset: () => set(() => initialState),
 });

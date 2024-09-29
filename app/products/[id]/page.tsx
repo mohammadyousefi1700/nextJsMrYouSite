@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { Query } from "node-appwrite";
 import { GiRoundStar } from "react-icons/gi";
 import ButtonAddOrder from "../components/Button";
+import Comment from "../components/comment";
 // interface Product {
 //   description: string;
 //   location: string;
@@ -15,11 +16,14 @@ import ButtonAddOrder from "../components/Button";
 //   $id: string;
 // }
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+export default async function ProductPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { id } = params;
 
-  const user = cookies().get("whoAmI");
-  console.log("user", user);
+  // const user = cookies().get("whoAmI");
 
   const fetchDocumentId = async (id: string, signal?: AbortSignal) => {
     const response = await axiosInstance.get(
@@ -82,7 +86,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                   <p> آدرس</p>
                   {data[0].location}
                 </span>
-                <ButtonAddOrder />
+                <ButtonAddOrder {...data[0]} />
               </div>
             </div>
 
@@ -93,75 +97,9 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 <button className="w-12 bg-[#ef4056] rounded-lg">ثبت</button>
               </div>
               <p className="font-medium text-2xl mt-4">نظرات</p>
-              <div className="mt-6 xl:w-[700px]  overflow-y-auto lg:w-[600px] xs:w-full sm:w-full md:w-[500px] rounded-sm px-4 ">
-                {data[1].documents.map((item, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="w-full sm:px-3 border-t-[2px]  gap-y-5  h-fit"
-                    >
-                      <div className="!gap-y-2 flex flex-col">
-                        <p>
-                          <span className="text-neutral-400 text-xs">
-                            خریدار
-                          </span>
-                          :<span> {item.commenter}</span>
-                        </p>
-
-                        <span className="flex ">
-                          <span className="text-neutral-400 text-xs">
-                            امتیاز :
-                          </span>
-                          {data[1] &&
-                            data[1].documents.map((item) => {
-                              return (
-                                <div
-                                  key={item.id}
-                                  className="flex mr-1 mt-[2px] gap-[1px]"
-                                >
-                                  {[...Array(item.star)].map((_, index) => {
-                                    return (
-                                      <GiRoundStar
-                                        className="text-yellow-500"
-                                        key={index}
-                                      />
-                                    );
-                                  })}
-                                </div>
-                              );
-                            })}
-                        </span>
-                        <p className="text-neutral-400 text-xs">توضیحات :</p>
-                        {item.comments}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+              <Comment documents={data[1].documents} />
             </div>
           </div>
-
-          // <div className="flex mt-20 xs:w-10  flex-col justify-center items-center ">
-          //   <div className=" p-1 items-center w-full object-cover border-box rounded-lg border-2 shadow-2xl">
-          //     <img
-          //       src={data[0].images}
-          //       alt={data[0].productName}
-          //       className="xl:w-96 object-fill xs:w-10 xs:h-5  xl:h-60 shadow-2xl  rounded-lg"
-          //     />
-          //   </div>
-
-          //   <div className="flex flex-col  w-full">
-          //     <div className="">information and Score</div>
-          //     <div className="flex sm:flex-wrap ">
-          //       <span>نام کالا:{data[0].productName}</span>
-          //       <span>توضیحات:{data[0].description}</span>
-          //       <span>قیمت:{data[0].price}</span>
-          //       <span>دسته بندی کالا{data[0].category}</span>
-          //       <span>مکان:{data[0].location}</span>
-          //     </div>
-          //   </div>
-
-          // </div>
         );
       }}
     </FetchData>
