@@ -1,20 +1,19 @@
-// import { useRouter } from "next/router";
-
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import { HandleSeparateThreeDigits } from "@/app/components/SeparateThreeDigits";
 import { cookies } from "next/headers";
 import { Query } from "node-appwrite";
 import { GiRoundStar } from "react-icons/gi";
-interface Product {
-  description: string;
-  location: string;
-  price: string;
-  images: string;
-  productName: string;
-  category: string;
-  $id: string;
-}
+import ButtonAddOrder from "../components/Button";
+// interface Product {
+//   description: string;
+//   location: string;
+//   price: string;
+//   images: string;
+//   productName: string;
+//   category: string;
+//   $id: string;
+// }
 
 export default function ProductPage({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -83,20 +82,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                   <p> آدرس</p>
                   {data[0].location}
                 </span>
-                <div className="flex  w-full !text-white gap-x-3 justify-center">
-                  <button className="w-12 bg-[#ef4056] rounded-lg">+</button>
-                  <span className="text-slate-900 font-medium rounded-lg text-center bg-white px-3 border-2">
-                    1
-                  </span>
-                  <button className="w-12 bg-gray-400 rounded-lg">-</button>
-                </div>
-                <div className="w-full justify-center flex-col text-center items-center">
-                  <p>جمع خرید</p>
-                  <p>100000</p>
-                  <button className="w-full text-white text-xl bg-[#ef4056] rounded-lg">
-                    افزودن به سبد خرید
-                  </button>
-                </div>
+                <ButtonAddOrder />
               </div>
             </div>
 
