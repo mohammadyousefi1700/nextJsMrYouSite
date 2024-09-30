@@ -3,7 +3,7 @@ import { CartState } from "./order-customer";
 export type Product = {
   description: string | null;
   location: string | null;
-  price: string;
+  price: number;
   images?: string | null;
   productName: string;
   category: string;

@@ -1,6 +1,5 @@
 import React from "react";
 import { Data } from "./type";
-import { GiRoundStar } from "react-icons/gi";
 import Star from "./star";
 
 async function Comment(data: Data) {

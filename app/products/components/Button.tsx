@@ -14,11 +14,16 @@ function ButtonAddOrder(props: Product) {
       products: state.products,
     }))
   );
+  console.log(props.price);
+
   const handleIsAddProduct =
-    products.length && products.some((item) => item.$id === props.$id);
+    products.length !== 0 ||
+    products.some((item) => {
+      item.$id === props.$id;
+    });
   const addProduct = useStore((state) => state.addProduct);
-  const product = getProductId(props.$id) as any;
-  console.log("product", product);
+  const product = getProductId(props.$id);
+  console.log(product);
 
   useEffect(() => {
     const unSub = useStore.subscribe(
@@ -64,7 +69,7 @@ function ButtonAddOrder(props: Product) {
         </div>
         <div className="w-full justify-center flex-col text-center items-center">
           <p>جمع خرید</p>
-          <p>{product.totalProductId}</p>
+          <p>{Number(product.totalProductId)}</p>
         </div>
       </>
     );

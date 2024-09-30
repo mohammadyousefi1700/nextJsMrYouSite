@@ -1,20 +1,9 @@
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import { HandleSeparateThreeDigits } from "@/app/components/SeparateThreeDigits";
-import { cookies } from "next/headers";
 import { Query } from "node-appwrite";
-import { GiRoundStar } from "react-icons/gi";
 import ButtonAddOrder from "../components/Button";
 import Comment from "../components/comment";
-// interface Product {
-//   description: string;
-//   location: string;
-//   price: string;
-//   images: string;
-//   productName: string;
-//   category: string;
-//   $id: string;
-// }
 
 export default async function ProductPage({
   params,
@@ -86,7 +75,7 @@ export default async function ProductPage({
                   <p> آدرس</p>
                   {data[0].location}
                 </span>
-                <ButtonAddOrder {...data[0]} />
+                <ButtonAddOrder price={Number(data[0].price)} {...data[0]} />
               </div>
             </div>
 
