@@ -2,8 +2,10 @@ import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import { HandleSeparateThreeDigits } from "@/app/components/SeparateThreeDigits";
 import { Query } from "node-appwrite";
-import ButtonAddOrder from "../components/Button";
+// import ButtonAddOrder from "../components/Button";
 import Comment from "../components/comment";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 
 export default async function ProductPage({
   params,
@@ -14,6 +16,9 @@ export default async function ProductPage({
 
   // const user = cookies().get("whoAmI");
 
+  const ButtonAddOrder = dynamic(() => import("../components/Button"), {
+    ssr: false,
+  });
   const fetchDocumentId = async (id: string, signal?: AbortSignal) => {
     const response = await axiosInstance.get(
       `/databases/${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}/collections/${process.env.NEXT_PUBLIC_APPWRITE_POST}/documents/${id}`,
@@ -57,13 +62,15 @@ export default async function ProductPage({
               </div>
 
               <div className=" p-1 items-center w-fit object-cover  border-box rounded-lg border-2 shadow-2xl">
-                <img
+                <Image
                   src={data[0].images}
                   alt={data[0].productName}
+                  width={100}
+                  height={100}
                   className="sm:w-80 shadow-lg shadow-yellow-200 lg:w-[400px] object-fill xl:h-72 md:w-96 xl:w-[400px] xs:w-80"
                 />
               </div>
-              <div className="lg:w-96 md:w-96 flex flex-col mt-10 px-2 py-2 gap-y-1 xl:w-[400px] sm:w-80 xs:w-60  items-start  object-cover  border-box rounded-lg border-2 shadow-yellow-300 shadow-2xl">
+              <div className="lg:w-96 md:w-96 flex flex-col mt-10 px-2 py-2 gap-y-1 xl:w-[400px] sm:w-80 xs:w-60  items-center  object-cover  border-box rounded-lg border-2 shadow-yellow-300 shadow-2xl">
                 <span className="border-b-2 font-normal items-center flex flex-col w-full shadow-yellow-100 shadow-md ">
                   <p>نام کالا</p>
                   {data[0].productName}
@@ -75,16 +82,16 @@ export default async function ProductPage({
                   <p> آدرس</p>
                   {data[0].location}
                 </span>
-                <ButtonAddOrder price={Number(data[0].price)} {...data[0]} />
+                <ButtonAddOrder {...data[0]} />
               </div>
             </div>
 
             <div className="flex items-center mt-20 flex-col w-full">
-              <textarea className="w-96 h-52 xs:px-5 xs:w-80 resize-none outline-none  rounded-lg border-[3px] bg-white" />
+              {/* <textarea className="w-96 h-52 xs:px-5 xs:w-80 resize-none outline-none  rounded-lg border-[3px] bg-white" />
               <div className="flex mr-64 xs:mr-48 mt-5 gap-x-4 !text-white font-normal">
                 <button className="w-12 bg-gray-400 rounded-lg">لغو</button>
                 <button className="w-12 bg-[#ef4056] rounded-lg">ثبت</button>
-              </div>
+              </div> */}
               <p className="font-medium text-2xl mt-4">نظرات</p>
               <Comment documents={data[1].documents} />
             </div>

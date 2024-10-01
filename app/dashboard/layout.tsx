@@ -15,10 +15,9 @@ export default function RootLayoutDashboard({
   children: React.ReactNode;
 }) {
   return (
-    <div>
-      <header>Header</header>
+    <div className="flex w-full  h-screen">
+      <div className="w-16 bg-red-700 "></div>
       <main>{children}</main>
-      <footer>Footer</footer>
     </div>
   );
 }

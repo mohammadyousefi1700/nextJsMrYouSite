@@ -1,11 +1,15 @@
 "use client";
+
+import { HandleSeparateThreeDigits } from "@/app/components/SeparateThreeDigits";
 import { useStore } from "@/app/store/store";
 import { Product } from "@/app/store/type";
-import React, { useEffect } from "react";
+
+import { useEffect } from "react";
+// import React, { useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 function ButtonAddOrder(props: Product) {
   //   const { addProduct, products,inQty,decQty } = useStore();
-  const { getProductId, decQty, incQty, setTotal, products } = useStore(
+  const { getProductId, decQty, incQty, products, setTotal } = useStore(
     useShallow((state) => ({
       getProductId: state.getProductId,
       decQty: state.decQty,
@@ -14,16 +18,16 @@ function ButtonAddOrder(props: Product) {
       products: state.products,
     }))
   );
-  console.log(props.price);
 
+  const addProduct = useStore((state) => state.addProduct);
+  const product = getProductId(props.$id);
   const handleIsAddProduct =
+    product === undefined ||
     products.length !== 0 ||
     products.some((item) => {
       item.$id === props.$id;
     });
-  const addProduct = useStore((state) => state.addProduct);
-  const product = getProductId(props.$id);
-  console.log(product);
+  console.log("product", handleIsAddProduct);
 
   useEffect(() => {
     const unSub = useStore.subscribe(
@@ -38,7 +42,7 @@ function ButtonAddOrder(props: Product) {
     return unSub;
   }, [setTotal]);
 
-  if (handleIsAddProduct === false) {
+  if (product === undefined) {
     return (
       <button
         onClick={() => addProduct(props)}
@@ -49,7 +53,7 @@ function ButtonAddOrder(props: Product) {
     );
   } else {
     return (
-      <>
+      <div>
         <div className="flex  w-full !text-white gap-x-3 justify-center">
           <button
             onClick={() => incQty(product.$id)}
@@ -58,7 +62,7 @@ function ButtonAddOrder(props: Product) {
             +
           </button>
           <span className="text-slate-900 font-medium rounded-lg text-center bg-white px-3 border-2">
-            {product.qty}
+            {product && <p> {product.qty}</p>}
           </span>
           <button
             onClick={() => decQty(product.$id)}
@@ -69,9 +73,11 @@ function ButtonAddOrder(props: Product) {
         </div>
         <div className="w-full justify-center flex-col text-center items-center">
           <p>جمع خرید</p>
-          <p>{Number(product.totalProductId)}</p>
+          {product && (
+            <p>{HandleSeparateThreeDigits(product.totalProductId)}</p>
+          )}
         </div>
-      </>
+      </div>
     );
   }
 }

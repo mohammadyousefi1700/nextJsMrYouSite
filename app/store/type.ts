@@ -19,7 +19,6 @@ export type ActionOrder = {
   getProductId: (productId: string) => CartProduct | undefined;
   setTotal: (total: number) => void;
   reset: () => void;
-  setTotalProductId: (ProductId: string) => void;
 };
 export type CartProduct = Product & {
   qty?: number | null | undefined;

@@ -65,7 +65,6 @@ export const createOrder: StateCreator<
   addProduct: (product) =>
     set((state) => {
       const foundProduct = state.products.find((p) => p.$id === product.$id);
-      console.log("foundProduct", foundProduct);
 
       if (foundProduct) {
         foundProduct.qty += 1;

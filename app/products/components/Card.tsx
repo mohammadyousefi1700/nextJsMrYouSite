@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { clsx } from "clsx";
 
 import Link from "next/link";
@@ -48,7 +49,6 @@ function Card(Prop: Props) {
         </div>{" "}
       </section>
     </Link>
-    // </div>
   );
 }
 export default Card;

@@ -9,6 +9,7 @@
 // import Image from "next/image";
 // import profilePic from "../../../public/download.ico";
 import Link from "next/link";
+import UserInfo from "./UserInfo";
 // import MenuDropDown from "../DropDown/dropDown";
 // import {
 //   ChevronDownOutline,
@@ -32,34 +33,7 @@ async function Navbar() {
       >
         MR_YOU
       </Link>
-      {/* <MenuDropDown
-        classNameMenuButton="w-fit h-10 rounded-full"
-        Option={
-          <p className="flex items-center mr-auto">
-            <UserCircle onPointerEnterCapture={{}} onPointerLeaveCapture={{}} />
-            <ChevronDownOutline
-              className="w-4 pt-2 text-white"
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            />
-          </p>
-        }
-        menuItems={
-          <div className="flex flex-col items-start p-2 pr-4 text-sm font-medium gap-y-3 w-36 ">
-            <div className="">نام کاربری : {} </div>
-            <form action={auth.deleteSession}>
-              <button type="submit">
-                <LockClosedOutline
-                  onPointerEnterCapture={{}}
-                  onPointerLeaveCapture={{}}
-                  className="w-5 h-5 "
-                />
-                خروج
-              </button>
-            </form>
-          </div>
-        }
-      /> */}
+      <UserInfo />
     </header>
   );
 }

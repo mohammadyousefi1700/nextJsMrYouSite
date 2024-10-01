@@ -3,9 +3,8 @@ import { FetchData } from "./components/FetchData/FetchData";
 import Search from "./components/Search/search";
 import { Query } from "node-appwrite";
 import Pagination from "./components/Pagination";
-import { cookies } from "next/headers";
 import Card from "./products/components/Card";
-
+import React from "react";
 export const revalidate = 60; // revalidate at most every hour
 
 type Document = {
@@ -34,9 +33,6 @@ export default async function Home({
 }: {
   searchParams: { query: string; currentPage?: string };
 }) {
-  // const user = cookies().get("whoAmI");
-  // console.log(user);
-
   const fetchData = async (query: string) => {
     const searchQuery = query || "";
     const queryBackend = [
