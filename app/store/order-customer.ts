@@ -14,7 +14,6 @@ export type CartActions = {
   getProductId: (productId: string) => CartProduct | undefined;
   setTotal: (total: number) => void;
   reset: () => void;
-  // setTotalProductId: (productId: string) => void;
 };
 
 const initialState: CartState = {

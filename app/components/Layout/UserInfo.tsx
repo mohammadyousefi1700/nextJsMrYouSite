@@ -1,54 +1,53 @@
 "use client";
+import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { useState } from "react";
 import { HiChevronDown, HiOutlineUser } from "react-icons/hi";
-import React from "react";
 
-function UserInfo() {
+type Props = {
+  data: any;
+};
+
+function UserInfo(props: Props) {
+  const { data } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const LogOut = async () => {
+    try {
+      await axiosInstance.delete(`/account/sessions/${data.$id}`);
+      console.log("Logout successful");
+    } catch (error) {
+      console.error("Error during logout", error);
+    }
+  };
   return (
-    <div>
+    <div className="relative">
       <span
         onClick={() => setIsOpen(!isOpen)}
-        className="flex border-2 rounded-lg cursor-pointer mt-1.5"
+        className="flex border-[#fffb00] items-center border-2 rounded-lg p-1 mt-1.5 cursor-pointer transition-transform duration-300"
       >
-        <HiChevronDown className="w-6 h-6 -ml-2 " />
-
-        <HiOutlineUser className="w-6 h-6 " />
+        <HiChevronDown
+          className={`w-5 h-5 transform transition-transform duration-300 ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        />
+        <HiOutlineUser className="w-5 h-5" />
       </span>
-      {isOpen ? (
-        <>
-          <div className="w-32 shadow-lg shadow-yellow-200 absolute mt-2 top-[34px] tran rounded-lg left-0 ml-1 h-6 bg-[#FFFFFF] border "></div>
-        </>
-      ) : null}{" "}
-      {/* {" "}
-      <MenuDropDown
-        classNameMenuButton="w-fit h-10 rounded-full"
-        Option={
-          <p className="flex items-center mr-auto">
-            <UserCircle onPointerEnterCapture={{}} onPointerLeaveCapture={{}} />
-            <ChevronDownOutline
-              className="w-4 pt-2 text-white"
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
-            />
-          </p>
-        }
-        menuItems={
-          <div className="flex flex-col items-start p-2 pr-4 text-sm font-medium gap-y-3 w-36 ">
-            <div className="">نام کاربری : {} </div>
-            <form action={auth.deleteSession}>
-              <button type="submit">
-                <LockClosedOutline
-                  onPointerEnterCapture={{}}
-                  onPointerLeaveCapture={{}}
-                  className="w-5 h-5 "
-                />
-                خروج
-              </button>
-            </form>
-          </div>
-        }
-      /> */}
+
+      <div
+        className={`absolute text-black  ml-2 top-12 left-0 w-40  bg-white shadow-lg rounded-lg border transition-all duration-500 transform ${
+          isOpen
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-4 pointer-events-none"
+        }`}
+      >
+        <div className="relative p-1 ">
+          <span className="">نام کاربری: </span>
+          <span>{data.name}</span>
+        </div>
+        <button onClick={() => LogOut()} className="p-1">
+          خروج
+        </button>
+      </div>
     </div>
   );
 }

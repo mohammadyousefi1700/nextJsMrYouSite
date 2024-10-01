@@ -27,7 +27,6 @@ function ButtonAddOrder(props: Product) {
     products.some((item) => {
       item.$id === props.$id;
     });
-  console.log("product", handleIsAddProduct);
 
   useEffect(() => {
     const unSub = useStore.subscribe(
