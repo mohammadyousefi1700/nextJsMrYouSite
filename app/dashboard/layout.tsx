@@ -6,9 +6,12 @@ export default function RootLayoutDashboard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex w-full  h-screen">
-      <SideBar />
-      <main>{children}</main>
+    <div className="flex w-full h-screen">
+      <div className="flex-none relative">
+        <SideBar />
+      </div>
+
+      <main className="pr-28 mt-12">{children}</main>
     </div>
   );
 }

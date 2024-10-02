@@ -14,7 +14,6 @@ function UserInfo(props: Props) {
   const LogOut = async () => {
     try {
       await axiosInstance.delete(`/account/sessions/${data.$id}`);
-      console.log("Logout successful");
     } catch (error) {
       console.error("Error during logout", error);
     }

@@ -5,7 +5,8 @@ import { Query } from "node-appwrite";
 import Pagination from "./components/Pagination";
 import Card from "./products/components/Card";
 import React from "react";
-export const revalidate = 60; // revalidate at most every hour
+
+export const revalidate = 600; // revalidate at most every hour
 
 type Document = {
   description: string;
@@ -33,7 +34,7 @@ export default async function Home({
 }: {
   searchParams: { query: string; currentPage?: string };
 }) {
-  const fetchData = async (query: string) => {
+  const fetchData = async (query: string): Promise<DataResponse> => {
     const searchQuery = query || "";
     const queryBackend = [
       Query.startsWith("productName", searchQuery),
@@ -60,11 +61,16 @@ export default async function Home({
         }
       );
       return response.data;
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-      return { documents: [] };
+    } catch (error: any) {
+      console.error(
+        "Error fetching data: ",
+        error.response?.data || error.message
+      );
+      // بازگشت مقدار پیش‌فرض در صورت خطا
+      return { total: 0, documents: [] };
     }
   };
+
   return (
     <>
       <Search />
@@ -72,12 +78,12 @@ export default async function Home({
         {(data: DataResponse) => {
           return (
             <div className="w-full mb-3">
-              <section className=" flex w-full h-full items-center justify-center flex-wrap gap-x-5">
+              <section className="flex w-full h-full items-center justify-center flex-wrap gap-x-5">
                 <div className="grid grid-cols-1 gap-y-9 xl:grid-cols-4 2xl:grid-cols-5 px-3 mt-3 gap-5 h-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {data.documents.length ? (
-                    data.documents.map((item, index) => {
-                      return <Card index={index} data={item} key={index} />;
-                    })
+                    data.documents.map((item, index) => (
+                      <Card index={index} data={item} key={item.$id} />
+                    ))
                   ) : (
                     <div>موردی برای نمایش وجود ندارد</div>
                   )}
@@ -85,7 +91,7 @@ export default async function Home({
                 {data.total > 50 ? (
                   <Pagination
                     current={Number(searchParams.currentPage)}
-                    total={Number(data?.total || 1) / Number(19)}
+                    total={Math.ceil(data.total / 50)}
                   />
                 ) : null}
               </section>
