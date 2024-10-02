@@ -11,7 +11,7 @@ export default function RootLayoutDashboard({
         <SideBar />
       </div>
 
-      <main className="pr-28 mt-12">{children}</main>
+      <main className="pr-28 w-full mt-12">{children}</main>
     </div>
   );
 }

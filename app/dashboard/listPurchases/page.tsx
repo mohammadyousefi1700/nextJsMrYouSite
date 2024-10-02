@@ -1,8 +1,10 @@
-
 function ListPurchases() {
   return (
-    <div>page</div>
-  )
+    <div className="flex justify-evenly ">
+      <div>1</div>
+      <div> page</div>
+    </div>
+  );
 }
 
-export default ListPurchases
+export default ListPurchases;
