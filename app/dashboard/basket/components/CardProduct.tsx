@@ -1,11 +1,11 @@
 "use client";
 
 import { useStore } from "@/app/store/store";
-import React from "react";
+import React, { useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 
 function CardProduct() {
-  const { products, incQty, decQtys } = useStore(
+  const { products, incQty, decQtys, setTotal } = useStore(
     useShallow((state) => ({
       getProductId: state.getProductId,
       decQtys: state.decQty,
@@ -14,9 +14,23 @@ function CardProduct() {
       products: state.products,
     }))
   );
+
+  useEffect(() => {
+    const unSub = useStore.subscribe(
+      (state) => state.products,
+      (products) => {
+        setTotal(
+          products.reduce((acc, item) => acc + Number(item.price) * item.qty, 0)
+        );
+      },
+      { fireImmediately: true }
+    );
+    return unSub;
+  }, [setTotal]);
+
   return (
     <div className="flex xl:w-[1000px] flex-col lg:w-[700px]  gap-y-4  md:w-[600px] sm:w-[400px]  xs:mt-20 sm:flex-col md:flex-col border-2 xs:flex-col rounded-lg h-full py-4 px-4 shadow-xl  bg-white">
-      {products &&
+      {products.length ? (
         products.map((item, index) => {
           return (
             <div
@@ -96,7 +110,10 @@ function CardProduct() {
             //   </div>
             // </div>
           );
-        })}
+        })
+      ) : (
+        <div>موردی برای نمایش وجود ندارد</div>
+      )}
     </div>
   );
 }

@@ -13,12 +13,16 @@ function CardCalculate() {
         {" "}
         جمع : {HandleSeparateThreeDigits2(total)}
       </span>
-      <Link
-        className="  mx-4 my-3 text-white text-center font-medium text-lg bg-[#ef4056] sm:w-full  rounded-lg"
-        href={"/dashboard/PaymentPage"}
-      >
-        پرداخت شود
-      </Link>
+      {total === 0 ? null : (
+        <Link
+          className={
+            "   mx-4 my-3 text-white text-center font-medium text-lg bg-[#ef4056] sm:w-full  rounded-lg"
+          }
+          href={"/dashboard/PaymentPage"}
+        >
+          پرداخت شود
+        </Link>
+      )}
     </div>
   );
 }
