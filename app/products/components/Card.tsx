@@ -1,4 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
+import {
+  HandleSeparateThreeDigits,
+  HandleSeparateThreeDigits2,
+} from "@/app/components/SeparateThreeDigits";
 import { clsx } from "clsx";
 
 import Link from "next/link";
@@ -19,7 +23,7 @@ type Props = {
 
 function Card(Prop: Props) {
   const { data, index } = Prop;
-  const tdClass = "w-full ";
+  const tdClass = "w-full border-b-2 shadow-md py-1";
 
   return (
     <Link
@@ -33,20 +37,32 @@ function Card(Prop: Props) {
           src={data.images}
           alt={data.productName}
         />
-        <div className="flex  flex-col w-full font-normal text-lg ">
-          <span className={tdClass}> نام کالا : {data.productName}</span>
-          <span className={tdClass}> قیمت : {data.price}</span>
-          <span className={tdClass}> مکان : {data.location}</span>
-          <div className="flex flex-wrap">
+        <div className="flex text-center  flex-col w-full  font-normal text-lg ">
+          <span className={tdClass}>
+            {" "}
+            <p>نام کالا</p> {data.productName}
+          </span>
+          <span className={`${tdClass}, font-mono`}>
+            {" "}
+            <p>قیمت </p> {HandleSeparateThreeDigits(Number(data.price))}
+          </span>
+          <span className={tdClass}>
+            {" "}
+            <p>مکان </p> {data.location}
+          </span>
+          <div className="flex justify-start text-right flex-wrap">
             <span
               title={data.description}
-              className={clsx(tdClass, "truncate")}
+              className={clsx(tdClass, "truncate shadow-none border-none")}
             >
-              {" "}
-              توضیحات : {data.description}
+              <p className="!text-center"> توضیحات</p>{" "}
+              <span className="mr-3">{data.description}</span>
             </span>
           </div>{" "}
         </div>{" "}
+        <button className="border-gladiatorYellow shadow-2xl shadow-gray-600 p-2 text-white rounded-lg  border-[3px] bg-gray-800">
+          جزئیات محصول
+        </button>
       </section>
     </Link>
   );

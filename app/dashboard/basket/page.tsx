@@ -1,18 +1,19 @@
-//سبد خرید
-// entity orders باید اصلاح شود با  برای دریافت مشخصات با از ای پی ای پستز استفاده بشه و فقط coun برای مقدار سفارش مشتری استفاده میشود این برای پروژه ری اکت هم هست و باید اصلاح بشه
-// در اینجا صحفه جمع فروش هم دااریم
-
 import dynamic from "next/dynamic";
 
 export default async function Basket() {
-  const CardProduct = dynamic(import("./components/CardProduct"));
+  const CardProduct = dynamic(() => import("./components/CardProduct"), {
+    ssr: false, //
+    loading: () => <p>Loading...</p>, // حالت بارگذاری
+  });
+
+  const CardCalculate = dynamic(() => import("./components/CardCalculate"), {
+    ssr: false,
+    loading: () => <p>Loading...</p>, // حالت بارگذاری
+  });
   return (
-    <div className="flex justify-around mt-7 w-full ">
+    <div className="flex  sm:flex-col mt-24 sm:items-center xs:pb-11 xs:flex-col xs:w-[300px] xs:mx-auto xs:mt-9 md:flex-col lg:gap-16 xl:gap-x-20  w-full ">
       <CardProduct />
-      <div className="w-96 h-14 border-2 rounded-lg shadow-lg shadow-yellow-100  bg-red-500">
-        {" "}
-        page
-      </div>
+      <CardCalculate />
     </div>
   );
 }

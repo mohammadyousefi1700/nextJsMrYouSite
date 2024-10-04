@@ -3,12 +3,18 @@
 import { HandleSeparateThreeDigits } from "@/app/components/SeparateThreeDigits";
 import { useStore } from "@/app/store/store";
 import { Product } from "@/app/store/type";
+import Link from "next/link";
 
 import { useEffect } from "react";
-// import React, { useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
-function ButtonAddOrder(props: Product) {
-  //   const { addProduct, products,inQty,decQty } = useStore();
+
+type Data = {
+  productPost: Product;
+  user?: string;
+};
+
+function ButtonAddOrder(props: Data) {
+  const { productPost, user } = props;
   const { getProductId, decQty, incQty, products, setTotal } = useStore(
     useShallow((state) => ({
       getProductId: state.getProductId,
@@ -20,12 +26,12 @@ function ButtonAddOrder(props: Product) {
   );
 
   const addProduct = useStore((state) => state.addProduct);
-  const product = getProductId(props.$id);
+  const product = getProductId(productPost.$id);
   const handleIsAddProduct =
     product === undefined ||
     products.length !== 0 ||
     products.some((item) => {
-      item.$id === props.$id;
+      item.$id === productPost.$id;
     });
 
   useEffect(() => {
@@ -40,42 +46,54 @@ function ButtonAddOrder(props: Product) {
     );
     return unSub;
   }, [setTotal]);
-
-  if (product === undefined) {
-    return (
-      <button
-        onClick={() => addProduct(props)}
-        className="w-full text-white text-xl bg-[#ef4056] rounded-lg"
-      >
-        افزودن به سبد خرید
-      </button>
-    );
+  if (user) {
+    if (product === undefined) {
+      return (
+        <button
+          onClick={() => addProduct(productPost)}
+          className="w-full text-white text-xl bg-[#ef4056] rounded-lg"
+        >
+          افزودن به سبد خرید
+        </button>
+      );
+    } else {
+      return (
+        <div>
+          <div className="flex  w-full !text-white gap-x-3 justify-center">
+            <button
+              onClick={() => incQty(product.$id)}
+              className="w-12 bg-[#ef4056] rounded-lg"
+            >
+              +
+            </button>
+            <span className="text-slate-900 font-medium rounded-lg text-center bg-white px-3 border-2">
+              {product && <p> {product.qty}</p>}
+            </span>
+            <button
+              onClick={() => decQty(product.$id)}
+              className="w-12 bg-gray-400 rounded-lg"
+            >
+              -
+            </button>
+          </div>
+          <div className="w-full justify-center flex-col text-center items-center">
+            <p>جمع خرید</p>
+            {product && (
+              <p>{HandleSeparateThreeDigits(product.totalProductId)}</p>
+            )}
+          </div>
+        </div>
+      );
+    }
   } else {
     return (
-      <div>
-        <div className="flex  w-full !text-white gap-x-3 justify-center">
-          <button
-            onClick={() => incQty(product.$id)}
-            className="w-12 bg-[#ef4056] rounded-lg"
-          >
-            +
-          </button>
-          <span className="text-slate-900 font-medium rounded-lg text-center bg-white px-3 border-2">
-            {product && <p> {product.qty}</p>}
-          </span>
-          <button
-            onClick={() => decQty(product.$id)}
-            className="w-12 bg-gray-400 rounded-lg"
-          >
-            -
-          </button>
-        </div>
-        <div className="w-full justify-center flex-col text-center items-center">
-          <p>جمع خرید</p>
-          {product && (
-            <p>{HandleSeparateThreeDigits(product.totalProductId)}</p>
-          )}
-        </div>
+      <div className="bg-redButton rounded-lg border-gray-600 border-1 shadow-md shadow-gladiatorYellow  p-2 text-white ">
+        <Link className="border-l-2 pl-2 " href={"/login"}>
+          ورود
+        </Link>
+        <Link className="pr-2" href={"/signUp"}>
+          ثبت نام
+        </Link>
       </div>
     );
   }

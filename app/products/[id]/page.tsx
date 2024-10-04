@@ -5,7 +5,7 @@ import { Query } from "node-appwrite";
 // import ButtonAddOrder from "../components/Button";
 import Comment from "../components/comment";
 import dynamic from "next/dynamic";
-import Image from "next/image";
+import { cookies } from "next/headers";
 
 export default async function ProductPage({
   params,
@@ -13,8 +13,7 @@ export default async function ProductPage({
   params: { id: string };
 }) {
   const { id } = params;
-
-  // const user = cookies().get("whoAmI");
+  const user = cookies().get("whoAmI");
 
   const ButtonAddOrder = dynamic(() => import("../components/Button"), {
     ssr: false,
@@ -46,7 +45,6 @@ export default async function ProductPage({
       fetchPerformanceSalesRequest(abortSignal),
     ]);
   };
-
   return (
     <FetchData request={AllRequest}>
       {(data) => {
@@ -62,7 +60,7 @@ export default async function ProductPage({
               </div>
 
               <div className=" p-1 items-center w-fit object-cover  border-box rounded-lg border-2 shadow-2xl">
-                <Image
+                <img
                   src={data[0].images}
                   alt={data[0].productName}
                   width={100}
@@ -75,14 +73,14 @@ export default async function ProductPage({
                   <p>نام کالا</p>
                   {data[0].productName}
                 </span>
-                <span className="border-b-2 flex flex-col !font-[Tahoma] w-full text-sm font-normal shadow-yellow-100 items-center shadow-md">
+                <span className="border-b-2 flex flex-col w-full text-sm font-normal font-mono shadow-yellow-100 items-center shadow-md">
                   <p> قیمت کالا</p> {HandleSeparateThreeDigits(data[0].price)}
                 </span>
                 <span className="flex font-normal flex-col items-center flex-wrap w-full">
                   <p> آدرس</p>
                   {data[0].location}
                 </span>
-                <ButtonAddOrder {...data[0]} />
+                <ButtonAddOrder user={user as any} productPost={data[0]} />
               </div>
             </div>
 

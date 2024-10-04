@@ -12,6 +12,20 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      backgroundColor: {
+        gladiatorYellow: "#fffb00",
+        redButton: "#ef4056",
+      },
+      textColor: {
+        gladiatorYellow: "#fffb00",
+      },
+      borderColor: {
+        gladiatorYellow: "#fffb00",
+      },
+      boxShadowColor: {
+        gladiatorYellow: "#fffb00",
+      },
+
       screens: {
         // xs برای موبایل (200px تا 490px)
         xs: { min: "200px", max: "490px" },

@@ -9,11 +9,14 @@ async function Navbar() {
   const ShoppingIcons = dynamic(() => import("./ShoppingIcons"), {
     ssr: false,
   });
-  const authenticated = axiosInstance.get("/account", {
-    headers: {
-      Cookie: auth.value,
-    },
-  });
+
+  const authenticated = auth
+    ? axiosInstance.get("/account", {
+        headers: {
+          Cookie: auth.value,
+        },
+      })
+    : null;
 
   return (
     <header className="w-full top-0  z-50  flex fixed justify-between h-10 text-[#fffb00] bg-[#0d0d0d]">
@@ -25,9 +28,9 @@ async function Navbar() {
         MR_YOU
       </Link>
       <div className=" flex gap-x-3 justify-center">
-        <ShoppingIcons />
+        {auth && <ShoppingIcons />}
 
-        <UserInfo data={(await authenticated).data} />
+        <UserInfo data={auth ? (await authenticated).data : null} />
       </div>
     </header>
   );
