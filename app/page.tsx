@@ -35,7 +35,7 @@ export default async function Home({
   searchParams: { query: string; currentPage?: string };
 }) {
   const fetchData = async (query: string): Promise<DataResponse> => {
-    const searchQuery = query || "";
+    const searchQuery = query && "";
     const queryBackend = [
       Query.startsWith("productName", searchQuery),
       Query.limit(50),

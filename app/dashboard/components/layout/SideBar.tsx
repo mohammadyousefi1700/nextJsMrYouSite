@@ -6,12 +6,18 @@ import React, { useState } from "react";
 import { HiChevronDoubleLeft } from "react-icons/hi";
 import { sidebarLink } from "./sidebarLink";
 import { usePathname } from "next/navigation";
+import { useClickAwayListener } from "@/app/components/useClickAwayListener";
 
 function SideBar() {
   const [isDrag, setIsDrag] = useState<boolean>(false);
   const pathname = usePathname();
 
-  return (
+  const handleClickAway = () => {
+    if (isDrag) setIsDrag(false);
+  };
+  const withClickAwayListener = useClickAwayListener(handleClickAway);
+
+  return withClickAwayListener(
     <div
       className={clsx(
         `fixed sm:w-full sm:z-50 xs:z-50 xs:w-full sm:h-10 xs:h-10 top-0 md:z-[1000] xl:z-[1000] lg:z-[1000] flex flex-col bg-gray-700 transition-all duration-300 ease-in-out`,
