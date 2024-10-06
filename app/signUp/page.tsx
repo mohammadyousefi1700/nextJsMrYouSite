@@ -15,14 +15,14 @@ export default async function SignUpPage() {
   async function createSessionClient(formData) {
     "use server";
     const data = Object.fromEntries(formData);
-    const { email, password, username } = data;
+    const { email, password, name } = data;
 
     try {
       const response = await axiosInstance.post("/account", {
         userId: ID.unique(),
-        username,
         email,
         password,
+        name,
       });
 
       if (response.status === 201) {
@@ -36,14 +36,15 @@ export default async function SignUpPage() {
 
         const setCookieHeader = loginResponse.headers["set-cookie"];
         if (setCookieHeader) {
+          // ذخیره کوکی در مرورگر
           cookies().set("whoAmI", setCookieHeader[0]);
+          // افزودن await در redirect تا از انجام ریدایرکت اطمینان حاصل شود
         }
       }
-
-      redirect("/");
     } catch (error) {
       console.error("Error during signup or login:", error);
     }
+    return redirect("/");
   }
   return (
     <div className="w-full flex flex-col bg-slate-900 p-2 justify-center  items-center !h-screen text-center align-bottom">
@@ -60,11 +61,11 @@ export default async function SignUpPage() {
           alt="logo"
         />
         <input
-          className=" border-r-2 text-white px-2 h-8 border-b-2 border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
+          className=" border-r-2 tex text-white px-2 h-8 border-b-2 border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
           autoComplete="off"
           type="text"
-          name="username"
-          placeholder=" ایمیل خود را وارد کنید..."
+          name="name"
+          placeholder=" نام خود را وارد کنید..."
           required
         />
         <input
