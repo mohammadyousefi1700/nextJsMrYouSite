@@ -17,34 +17,33 @@ export default async function SignUpPage() {
     const data = Object.fromEntries(formData);
     const { email, password, username } = data;
 
-
-    await axiosInstance
-      .post("/account", {
+    try {
+      const response = await axiosInstance.post("/account", {
         userId: ID.unique(),
         username,
         email,
         password,
-      })
-      .then((response) => {
-        console.log("response", response);
-      })
-      .catch((err) => console.log(err))
-      .then(() => {
-        setTimeout(
-          () =>
-            axiosInstance
-              .post("/account/sessions/email", {
-                email,
-                password,
-              })
-              .then((re) => {
-                cookies().set("whoAmI", re.headers["set-cookie"][0]);
-              }),
-          2000
-        );
       });
 
-    redirect("/");
+      if (response.status === 201) {
+        const loginResponse = await axiosInstance.post(
+          "/account/sessions/email",
+          {
+            email,
+            password,
+          }
+        );
+
+        const setCookieHeader = loginResponse.headers["set-cookie"];
+        if (setCookieHeader) {
+          cookies().set("whoAmI", setCookieHeader[0]);
+        }
+      }
+
+      redirect("/");
+    } catch (error) {
+      console.error("Error during signup or login:", error);
+    }
   }
   return (
     <div className="w-full flex flex-col bg-slate-900 p-2 justify-center  items-center !h-screen text-center align-bottom">
