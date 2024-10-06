@@ -1,31 +1,30 @@
 "use client";
-import axiosInstance from "@/app/axiosInstance/axiosInctance";
+import { useStore } from "@/app/store/store";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { GiBrutalHelm } from "react-icons/gi";
 import { HiChevronDown, HiOutlineUser } from "react-icons/hi";
+import { useClickAwayListener } from "../useClickAwayListener";
 
 type Props = {
   data?: any;
+  auth: any;
 };
 
 function UserInfo(props: Props) {
-  const { data } = props;
+  const { data, auth } = props;
   const pathname = usePathname();
+  const { reset } = useStore();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const LogOut = async () => {
-    try {
-      await axiosInstance.delete(`/account/sessions/${data.$id}`);
-    } catch (error) {
-      console.error("Error during logout", error);
-    }
+  const handleClickAway = () => {
+    if (isOpen) setIsOpen(false);
   };
-  if (data) {
-    return (
-      <div className="relative ml-2 sm:ml-5 md:ml-5 lg:ml-5 xs:ml-5">
+  const withClickAwayListener = useClickAwayListener(handleClickAway);
+  return data ? (
+    withClickAwayListener(
+      <div className="relative z-50 ml-2 sm:ml-5 md:ml-5 lg:ml-5 xs:ml-5">
         <span
           onClick={() => setIsOpen(!isOpen)}
           className="flex border-[#fffb00] items-center border-2 rounded-lg p-1 mt-1.5 cursor-pointer transition-transform duration-300"
@@ -49,32 +48,40 @@ function UserInfo(props: Props) {
             <span className="">نام کاربری: </span>
             <span>{data?.name}</span>
           </div>
-          <button onClick={() => LogOut()} className="p-1">
+          <button
+            onClick={async () => {
+              await auth();
+              await reset();
+            }}
+            className="p-1"
+          >
             خروج
           </button>
         </div>
       </div>
-    );
-  } else if (pathname !== "/signUp" && pathname !== "/login") {
-    return (
-      <div className="flex     items-center rounded-lg ml-3">
-        <GiBrutalHelm className="w-8 h-8 px-1" />
+    )
+  ) : (
+    <div className="flex     items-center rounded-lg ml-3">
+      {pathname !== "/signUp" && pathname !== "/login" ? (
+        <div className="flex">
+          <GiBrutalHelm className="w-8 h-8 px-1" />
 
-        <Link
-          className="border-l-2 font-normal text-lg -py-3 pl-1  border-gladiatorYellow"
-          href={"/login"}
-        >
-          ورود
-        </Link>
-        <Link
-          className=" pr-1 mt-1 font-normal text-lg -py-3   border-gladiatorYellow"
-          href={"/signUp"}
-        >
-          ثبت نام
-        </Link>
-      </div>
-    );
-  }
+          <Link
+            className="border-l-2 font-normal text-lg -py-3 pl-1  border-gladiatorYellow"
+            href={"/login"}
+          >
+            ورود
+          </Link>
+          <Link
+            className=" pr-1 mt-1 font-normal text-lg -py-3   border-gladiatorYellow"
+            href={"/signUp"}
+          >
+            ثبت نام
+          </Link>
+        </div>
+      ) : null}
+    </div>
+  );
 }
 
 export default UserInfo;

@@ -1,4 +1,3 @@
-import dynamic from "next/dynamic";
 import SideBar from "./components/layout/SideBar";
 
 export default function RootLayoutDashboard({
@@ -6,9 +5,6 @@ export default function RootLayoutDashboard({
 }: {
   children: React.ReactNode;
 }) {
-  // const SideBar = dynamic(() => import("./components/layout/SideBar"), {
-  //   ssr: false,
-  // });
   return (
     <div className=" md:flex-col sm:flex-col xs:flex-col h-screen">
       <div className="flex-none relative">
