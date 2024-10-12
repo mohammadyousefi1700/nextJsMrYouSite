@@ -1,8 +1,11 @@
+import ActiveOrder from "../@activeOrder/page";
+
 function ListPurchases() {
   return (
     <div className="flex justify-evenly ">
-      <div>1</div>
-      <div> page</div>
+      {/* {ActiveOrder} */}
+      {/* <div>1</div>
+      <div> page</div> */}
     </div>
   );
 }

@@ -23,13 +23,13 @@ function CardCalculate() {
       }
     );
     if (response.status === 201) {
-      router.push("/");
+      router.push("dashboard/listPurchases");
       await setTimeout(() => reset(), 1000);
     }
   }
 
   return (
-    <div className="bg-white xs:mt-5 mt-8 flex  flex-col xl:w-[600px] lg:w-[300px] px-4 md:w-[580px] sm:w-[500px] sm:items-center   h-fit  rounded-lg border-2 shadow-2xl ">
+    <div className="bg-white xs:mt-5 mt-3 flex  flex-col xl:w-[600px] lg:w-[300px] px-4 md:w-[580px] sm:w-[500px] sm:items-center   h-fit  rounded-lg border-2 shadow-2xl ">
       <span className="font-mono px-4 border-b-2 shadow-sm  py-2">
         {" "}
         جمع : {HandleSeparateThreeDigits2(total)}
