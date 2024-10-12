@@ -23,28 +23,34 @@ type Props = {
 
 function Card(Prop: Props) {
   const { data, index } = Prop;
-  const tdClass = "w-full border-b-2 shadow-md py-1";
+  const tdClass = "w-full text-black text-[20px] border-b-2 shadow-md py-1";
 
   return (
     <Link
-      className="flex min-w-7 flex-col overflow-hidden font-normal text-lg items-center rounded-xl outline-none cursor-pointer w-full h-full  shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] transition-transform transform hover:scale-105"
+      className="flex min-w-7  font-black flex-col overflow-hidden hover:!text-lg !text-lg items-center rounded-xl outline-none  will-change-transform cursor-pointer w-full h-full   shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] transition-transform transform hover:scale-110 "
       key={index}
       href={`/products/${data.$id}`}
     >
-      <section className="  flex w-[280px] flex-col items-center shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] p-2">
+      <section className="  flex w-[280px] flex-col items-center transform-cpu shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] p-2  ">
         <img
           className="w-32 h-32 rounded-full "
           src={data.images}
           alt={data.productName}
         />
-        <div className="flex text-center  flex-col w-full  font-normal text-lg ">
-          <span className={tdClass}>
+        <div className="flex text-center hover:font-normal  flex-col w-full  font-medium   ">
+          <span className={clsx(tdClass, "text-black text-[20px]")}>
             {" "}
             <p>نام کالا</p> {data.productName}
           </span>
-          <span className={`${tdClass}, font-mono`}>
+          <span className={`${tdClass} `}>
             {" "}
-            <p>قیمت </p> {HandleSeparateThreeDigits(Number(data.price))}
+            <p className={"text-black w-full !font-medium hover:text-black"}>
+              قیمت{" "}
+            </p>{" "}
+            <span className="font-mono ">
+              {" "}
+              {HandleSeparateThreeDigits(Number(data.price))}
+            </span>
           </span>
           <span className={tdClass}>
             {" "}
