@@ -1,8 +1,11 @@
-import ActiveOrder from "../@activeOrder/page";
+import CmpActiveOrder from "./components/cmpActiveOrder";
+import Purchase from "./components/purchase";
 
 function ListPurchases() {
   return (
-    <div className="flex justify-evenly ">
+    <div className="flex flex-col items-center gap-y-20 mt-36 ">
+      <CmpActiveOrder />
+      <Purchase />
       {/* {ActiveOrder} */}
       {/* <div>1</div>
       <div> page</div> */}
