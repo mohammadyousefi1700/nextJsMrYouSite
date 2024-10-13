@@ -8,7 +8,6 @@ import React from "react";
 function CardCalculate() {
   const { total, products, reset } = useStore();
   const router = useRouter();
-  console.log("router", router);
 
   async function handleSendOrder() {
     const response = await axiosInstance.post(
@@ -22,8 +21,10 @@ function CardCalculate() {
         },
       }
     );
+
     if (response.status === 201) {
       router.push("dashboard/listPurchases");
+      router.push(`paymentPage/${response.data.$id}`);
       await setTimeout(() => reset(), 1000);
     }
   }

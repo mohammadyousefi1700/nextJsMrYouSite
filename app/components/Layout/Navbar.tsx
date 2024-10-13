@@ -1,15 +1,15 @@
 import Link from "next/link";
 import UserInfo from "./UserInfo";
+import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
-import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
 async function Navbar() {
-  const auth = cookies().get("whoAmI");
   const ShoppingIcons = dynamic(() => import("./ShoppingIcons"), {
     ssr: false,
   });
+  const auth = await cookies().get("whoAmI");
 
   const authenticated = auth
     ? axiosInstance.get("/account", {
@@ -25,7 +25,6 @@ async function Navbar() {
     };
     return handle().then(() => redirect("/login"));
   }
-
   return (
     <header className="w-full top-0  z-[1000] flex fixed justify-between h-10 text-[#fffb00] bg-[#0d0d0d]">
       <Link
@@ -36,7 +35,7 @@ async function Navbar() {
         MR_YOU
       </Link>
       <div className=" flex gap-x-3 justify-center">
-        {auth && <ShoppingIcons />}
+        {(await auth) && <ShoppingIcons />}
         <UserInfo
           auth={deleteCookie}
           data={auth ? (await authenticated).data : null}
