@@ -21,8 +21,8 @@ async function Navbar() {
   //   : null;
 
   // console.log("auth.user", auth.user);
-  const user = auth;
-  console.log("user", user);
+  const user = await auth.getUser();
+  console.log("user", await user);
 
   async function deleteCookie() {
     "use server";
@@ -41,10 +41,10 @@ async function Navbar() {
         MR_YOU
       </Link>
       <div className=" flex gap-x-3 justify-center">
-        {/* {(await auth) && <ShoppingIcons />} */}
+        {(await user) && <ShoppingIcons />}
         <UserInfo
           auth={deleteCookie}
-          // data={auth ? (await authenticated).data : null}
+          data={user !== null ? await user.data : null}
         />{" "}
       </div>
     </header>

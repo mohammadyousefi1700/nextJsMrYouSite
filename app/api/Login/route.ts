@@ -1,10 +1,9 @@
-"use server";
-
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { cookies } from "next/headers";
 
-export default async function createSessionClient(data) {
-  const { email, password } = data; // دریافت داده‌های فرم
+export async function POST(request) {
+  const { email, password } = await request.json();
+  console.log("email, password", email, password);
 
   try {
     const response = await axiosInstance.post("/account/sessions/email", {
@@ -12,9 +11,19 @@ export default async function createSessionClient(data) {
       password,
     });
 
-    // ذخیره کوکی‌ها
-    cookies().set("whoAmI", response.headers["set-cookie"][0]);
+    if (response.headers["set-cookie"]) {
+      cookies().set("whoAmI", response.headers["set-cookie"][0]);
+    }
+
+    return new Response(JSON.stringify({ message: "Login successful" }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
   } catch (error) {
-    console.error("Error creating session:", error);
+    console.error("Error logging in:", error);
+    return new Response(JSON.stringify({ error: "Invalid credentials" }), {
+      status: 401,
+      headers: { "Content-Type": "application/json" },
+    });
   }
 }

@@ -42,7 +42,9 @@ export default async function Home({
       Query.orderDesc("$createdAt"),
       Query.offset(
         Number(
-          searchParams.currentPage === undefined ? 1 : searchParams.currentPage
+          searchParams.currentPage === undefined || null
+            ? 1
+            : searchParams.currentPage
         )
       ),
     ];
@@ -60,6 +62,8 @@ export default async function Home({
           },
         }
       );
+      // console.log(response);
+
       return response.data;
     } catch (error: any) {
       console.error(
