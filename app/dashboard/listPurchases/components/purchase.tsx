@@ -63,8 +63,6 @@ async function Purchase() {
                       return (
                         <div className="flex">
                           {JsonListParse.map((itemParse) => {
-                            console.log(itemParse);
-
                             return (
                               <div className="flex">
                                 <img

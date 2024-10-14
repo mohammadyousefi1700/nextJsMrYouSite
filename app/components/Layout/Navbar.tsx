@@ -4,20 +4,26 @@ import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { redirect } from "next/navigation";
+import auth from "@/app/auth";
 
 async function Navbar() {
   const ShoppingIcons = dynamic(() => import("./ShoppingIcons"), {
     ssr: false,
   });
-  const auth = await cookies().get("whoAmI");
+  // const auth = await cookies().get("whoAmI");
 
-  const authenticated = auth
-    ? axiosInstance.get("/account", {
-        headers: {
-          Cookie: auth.value,
-        },
-      })
-    : null;
+  // const authenticated = auth
+  //   ? axiosInstance.get("/account", {
+  //       headers: {
+  //         Cookie: auth.value,
+  //       },
+  //     })
+  //   : null;
+
+  // console.log("auth.user", auth.user);
+  const user = auth;
+  console.log("user", user);
+
   async function deleteCookie() {
     "use server";
     const handle = async () => {
@@ -35,10 +41,10 @@ async function Navbar() {
         MR_YOU
       </Link>
       <div className=" flex gap-x-3 justify-center">
-        {(await auth) && <ShoppingIcons />}
+        {/* {(await auth) && <ShoppingIcons />} */}
         <UserInfo
           auth={deleteCookie}
-          data={auth ? (await authenticated).data : null}
+          // data={auth ? (await authenticated).data : null}
         />{" "}
       </div>
     </header>

@@ -27,8 +27,6 @@ async function PaymentPage({
     <FetchData request={() => fetchDataOrder(params.id)}>
       {(data) => {
         if (data) {
-          console.log(data);
-
           return (
             <div className="w-full  h-screen justify-center items-center flex flex-col">
               <span className="font-semibold text-lg">
