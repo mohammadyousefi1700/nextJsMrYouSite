@@ -1,8 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  HandleSeparateThreeDigits,
-  HandleSeparateThreeDigits2,
-} from "@/app/components/SeparateThreeDigits";
+import { HandleSeparateThreeDigits } from "@/app/components/SeparateThreeDigits";
 import { clsx } from "clsx";
 
 import Link from "next/link";
@@ -27,7 +24,7 @@ function Card(Prop: Props) {
 
   return (
     <Link
-      className="flex min-w-7  font-black flex-col overflow-hidden hover:!text-lg !text-lg items-center rounded-xl outline-none  will-change-transform cursor-pointer w-full h-full   shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] transition-transform transform hover:scale-110 "
+      className="flex min-w-7  font-black flex-col overflow-hidden !text-lg items-center rounded-xl outline-none  will-change-transform cursor-pointer w-full h-full   shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] transition-transform transform hover:scale-110 "
       key={index}
       href={`/products/${data.$id}`}
     >

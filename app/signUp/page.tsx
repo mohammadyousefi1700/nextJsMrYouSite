@@ -1,10 +1,5 @@
 import { Metadata } from "next";
-import axiosInstance from "../axiosInstance/axiosInctance";
-import { cookies } from "next/headers";
-import Image from "next/image";
-import Logo from "../../public/logo.png";
-import { redirect } from "next/navigation";
-import { ID } from "node-appwrite";
+import LoginPage from "../login/components/ClientFormComponent";
 
 export const metadata: Metadata = {
   title: "صحفه ورود",
@@ -12,85 +7,39 @@ export const metadata: Metadata = {
 };
 
 export default async function SignUpPage() {
-  async function createSessionClient(formData) {
-    "use server";
-    const data = Object.fromEntries(formData);
-    const { email, password, name } = data;
+  // async function createSessionClient(formData) {
+  //   "use server";
+  //   const data = Object.fromEntries(formData);
+  //   const { email, password, name } = data;
 
-    try {
-      const response = await axiosInstance.post("/account", {
-        userId: ID.unique(),
-        email,
-        password,
-        name,
-      });
+  //   try {
+  //     const response = await axiosInstance.post("/account", {
+  //       userId: ID.unique(),
+  //       email,
+  //       password,
+  //       name,
+  //     });
 
-      if (response.status === 201) {
-        const loginResponse = await axiosInstance.post(
-          "/account/sessions/email",
-          {
-            email,
-            password,
-          }
-        );
+  //     if (response.status === 201) {
+  //       const loginResponse = await axiosInstance.post(
+  //         "/account/sessions/email",
+  //         {
+  //           email,
+  //           password,
+  //         }
+  //       );
 
-        const setCookieHeader = loginResponse.headers["set-cookie"];
-        if (setCookieHeader) {
-          // ذخیره کوکی در مرورگر
-          cookies().set("whoAmI", setCookieHeader[0]);
-          // افزودن await در redirect تا از انجام ریدایرکت اطمینان حاصل شود
-        }
-      }
-    } catch (error) {
-      console.error("Error during signup or login:", error);
-    }
-    return redirect("/");
-  }
-  return (
-    <div className="w-full flex flex-col bg-slate-900 p-2 justify-center  items-center !h-screen text-center align-bottom">
-      <form
-        action={createSessionClient}
-        className="flex rounded-lg  flex-col shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] items-center  w-full max-w-[30rem] min-w-[10rem] bg-slate-700 p-3 gap-y-5"
-      >
-        <Image
-          src={Logo}
-          draggable={false}
-          width={200}
-          height={200}
-          className="object-cover inline-block"
-          alt="logo"
-        />
-        <input
-          className=" border-r-2 tex text-white px-2 h-8 border-b-2 border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
-          autoComplete="off"
-          type="text"
-          name="name"
-          placeholder=" نام خود را وارد کنید..."
-          required
-        />
-        <input
-          className=" border-r-2 h-8 border-b-2 px-2 text-white border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
-          autoComplete="off"
-          type="email"
-          name="email"
-          placeholder=" ایمیل خود را وارد کنید..."
-          required
-        />
-        <input
-          className=" border-r-2 px-2 text-white h-8 border-b-2 border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
-          autoComplete="off"
-          type="password"
-          name="password"
-          placeholder="رمز ورود"
-          required
-        />
-        <button
-          className="border-yellow-500 text-yellow-400 p-2 rounded-lg border-2"
-          type="submit"
-        >
-          ورود
-        </button>
-      </form>
-    </div>
-  );
+  //       const setCookieHeader = loginResponse.headers["set-cookie"];
+  //       if (setCookieHeader) {
+  //         // ذخیره کوکی در مرورگر
+  //         cookies().set("whoAmI", setCookieHeader[0]);
+  //         // افزودن await در redirect تا از انجام ریدایرکت اطمینان حاصل شود
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during signup or login:", error);
+  //   }
+  //   return redirect("/");
+  // }
+  return <LoginPage />;
 }

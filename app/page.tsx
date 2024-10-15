@@ -76,12 +76,12 @@ export default async function Home({
   };
 
   return (
-    <>
+    <div className=" h-screen pb-8 overflow-y-auto ">
       <Search />
       <FetchData request={() => fetchData(searchParams.query)}>
         {(data: DataResponse) => {
           return (
-            <div className="w-full mb-3">
+            <div className="w-full mb-3 ">
               <section className="flex w-full h-full items-center justify-center flex-wrap gap-x-5">
                 <div className="grid grid-cols-1 gap-y-9 xl:grid-cols-4 2xl:grid-cols-5 px-3 mt-3 gap-5 h-full sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                   {data.documents.length ? (
@@ -103,6 +103,6 @@ export default async function Home({
           );
         }}
       </FetchData>
-    </>
+    </div>
   );
 }

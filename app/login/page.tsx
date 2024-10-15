@@ -1,12 +1,5 @@
 import { Metadata } from "next";
-// import axiosInstance from "../axiosInstance/axiosInctance";
-// import { cookies } from "next/headers";
-import Image from "next/image";
-import Logo from "../../public/logo.png";
-import Link from "next/link";
 import dynamic from "next/dynamic";
-// import { redirect } from "next/navigation";
-// import auth from "../auth";
 
 export const metadata: Metadata = {
   title: "صحفه ورود",
