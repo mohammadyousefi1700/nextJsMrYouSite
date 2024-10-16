@@ -49,6 +49,7 @@ function UserInfo(props: Props) {
             <span>{data?.name}</span>
           </div>
           <button
+            type="button"
             onClick={async () => {
               await auth();
               await reset();

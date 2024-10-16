@@ -11,6 +11,7 @@ export async function POST(request) {
       password,
       name,
     });
+
     if (response.status === 201) {
       const loginResponse = await axiosInstance.post(
         "/account/sessions/email",
@@ -35,8 +36,10 @@ export async function POST(request) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Error logging in:", error);
-    return new Response(JSON.stringify({ error: "Invalid credentials" }), {
+    // console.error("Error logging in:", error);
+    console.log("error.message", error.message);
+
+    return new Response(JSON.stringify({ error: error.message }), {
       status: 401,
       headers: { "Content-Type": "application/json" },
     });

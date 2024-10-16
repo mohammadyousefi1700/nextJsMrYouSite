@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function LoginPage() {
-  const [error, setError] = useState("");
+  const [errormessage, setErrorMassage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -45,15 +45,16 @@ export default function LoginPage() {
           throw new Error(error);
         }
       }
-      setError("");
+      setErrorMassage("");
       window.location.href = "/";
     } catch (error) {
-      setError(error.message);
+      setErrorMassage(error.message);
+      console.log(error);
     }
   };
 
   return (
-    <div className="w-full flex flex-col bg-slate-900 p-2 justify-center  items-center !h-screen text-center align-bottom">
+    <div className="w-full flex flex-col bg-slate-900 p-2 justify-center  items-center !h-screen text-center ">
       <form
         onSubmit={handleSubmit}
         className="flex rounded-lg  flex-col shadow-[0_4px_8px_0px_rgba(0,0,0,0.2),0_6px_20px_0_rgba(0,0,0,0.19)] items-center  w-full max-w-[30rem] min-w-[10rem] bg-slate-700 p-3 gap-y-5"
@@ -66,16 +67,16 @@ export default function LoginPage() {
           className="object-cover inline-block"
           alt="logo"
         />
-        {error && (
-          <div className="flex gap-x-2 text-red-500">
+        {errormessage && (
+          <div className="flex font-sans text-base items-center gap-x-2 text-red-500">
             <GoAlertFill />
-            {error && "ورود نامعتبر , لطفا پسورد و ایمیل خود را چک کنید"}
+            {errormessage && "ورود نامعتبر , لطفا پسورد و ایمیل خود را چک کنید"}
             <GoAlertFill />
           </div>
         )}{" "}
         {pathName === "/signUp" && (
           <input
-            className=" border-r-2 tex text-white px-2 h-8 border-b-2 border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
+            className=" border-r-2 tex text-white placeholder:font-sans px-2 h-8 border-b-2 border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
             autoComplete="off"
             type="text"
             name="name"
@@ -85,7 +86,7 @@ export default function LoginPage() {
           />
         )}
         <input
-          className=" border-r-2 h-8 border-b-2 px-2 text-white border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
+          className=" border-r-2 h-8 pla border-b-2 px-2 placeholder:font-sans text-white border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
           autoComplete="off"
           type="email"
           name="email"
@@ -94,7 +95,7 @@ export default function LoginPage() {
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          className=" border-r-2 px-2 text-white h-8 border-b-2 border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
+          className=" border-r-2 placeholder:font-sans px-2 text-white h-8 border-b-2 border-t-0 rounded-lg border-l-0 w-full focus:border-yellow-400 outline-none shadow-2xl  max-w-[30rem] min-w-[10rem] bg-slate-700"
           autoComplete="off"
           type="password"
           name="password"
@@ -103,21 +104,21 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button
-          className="border-yellow-500 text-yellow-400 p-2 rounded-lg border-2"
+          className="border-yellow-500  text-center items-center pb-2 px-3 font-sans text-yellow-400   rounded-lg border-2"
           type="submit"
         >
           ورود
         </button>
         {pathName === "/login" ? (
           <Link
-            className=" text-yellow-400   hover:text-yellow-100"
+            className=" text-yellow-400  text-base font-sans  hover:text-yellow-100"
             href={"/signUp"}
           >
             ثبت نام
           </Link>
         ) : (
           <Link
-            className=" text-yellow-400   hover:text-yellow-100"
+            className=" text-yellow-400 text-base font-sans  hover:text-yellow-100"
             href={"/login"}
           >
             حساب دارم

@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 
 export async function POST(request) {
   const { email, password } = await request.json();
+  console.log("request", request);
+
   try {
     const response = await axiosInstance.post("/account/sessions/email", {
       email,
@@ -19,9 +21,10 @@ export async function POST(request) {
     });
   } catch (error) {
     console.error("Error logging in:", error);
-    return new Response(JSON.stringify({ error: "Invalid credentials" }), {
-      status: 401,
-      headers: { "Content-Type": "application/json" },
-    });
+    if (error)
+      return new Response(JSON.stringify({ error: "Invalid credentials" }), {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      });
   }
 }
