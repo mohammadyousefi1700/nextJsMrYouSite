@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 };
 
 const ClientComponent = dynamic(
-  () => import("./components/ClientFormComponent"),
+  () => import("../components/customSinupAndLogin/ClientFormComponent"),
   { ssr: false }
 );
 export default function LoginPage() {

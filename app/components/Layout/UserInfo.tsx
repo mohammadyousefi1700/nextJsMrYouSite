@@ -6,6 +6,7 @@ import { useState } from "react";
 import { GiBrutalHelm } from "react-icons/gi";
 import { HiChevronDown, HiOutlineUser } from "react-icons/hi";
 import { useClickAwayListener } from "../useClickAwayListener";
+import { HiArrowLeftStartOnRectangle } from "react-icons/hi2";
 
 type Props = {
   data?: any;
@@ -38,13 +39,13 @@ function UserInfo(props: Props) {
         </span>
 
         <div
-          className={`absolute text-black  ml-2 top-12 left-0 w-40  bg-white shadow-lg rounded-lg border transition-all duration-500 transform ${
+          className={`absolute text-black py-2  ml-2 top-12 left-0 w-52  bg-white shadow-lg rounded-lg border transition-all duration-500 transform ${
             isOpen
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-4 pointer-events-none"
           }`}
         >
-          <div className="relative p-1 ">
+          <div className="relative p-1 w-full">
             <span className="">نام کاربری: </span>
             <span>{data?.name}</span>
           </div>
@@ -54,9 +55,11 @@ function UserInfo(props: Props) {
               await auth();
               await reset();
             }}
-            className="p-1"
+            className="p-1 items-center  gap-x-1 flex"
           >
-            خروج
+            <HiArrowLeftStartOnRectangle />
+
+            <span>خروج</span>
           </button>
         </div>
       </div>

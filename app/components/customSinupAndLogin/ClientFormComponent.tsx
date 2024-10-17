@@ -6,13 +6,12 @@ import { GoAlertFill } from "react-icons/go";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export default function LoginPage() {
+export default function ClientPageComponent() {
   const [errormessage, setErrorMassage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const pathName = usePathname();
-  console.log("pathName", pathName);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
