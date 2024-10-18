@@ -22,7 +22,7 @@ export default async function ProductPage({
     const response = await axiosInstance.get(
       `/databases/${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}/collections/${process.env.NEXT_PUBLIC_APPWRITE_POST}/documents/${id}`,
       {
-        signal, // اضافه کردن سیگنال لغو به درخواست
+        signal,
       }
     );
 
@@ -34,7 +34,7 @@ export default async function ProductPage({
       `/databases/${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}/collections/${process.env.NEXT_SCORE_SALES}/documents`,
       {
         params: [Query.startsWith("id", "66edf17dceb196d3f92e")],
-        signal, // اضافه کردن سیگنال لغو به درخواست
+        signal,
       }
     );
     return responseComments.data;
@@ -48,6 +48,8 @@ export default async function ProductPage({
   return (
     <FetchData request={AllRequest}>
       {(data) => {
+        // console.log(data);
+
         return (
           <div className="flex mb-20 mt-14 w-full flex-col justify-center items-center ">
             <div className="flex sm:flex-col xs:flex-col sm:items-center xs:items-center justify-evenly items-end w-full">

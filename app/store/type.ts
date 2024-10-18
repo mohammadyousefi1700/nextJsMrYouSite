@@ -1,6 +1,7 @@
 import { CartState } from "./order-customer";
 
 export type Product = {
+  saleProvider: string | null;
   description: string | null;
   location: string | null;
   price: number;
@@ -12,6 +13,7 @@ export type Product = {
 };
 
 export type ActionOrder = {
+  addLocation: (Addres: string) => void;
   addProduct: (product: Product) => void;
   removeProduct: (productId: string) => void;
   inQty: (productId: string) => void;

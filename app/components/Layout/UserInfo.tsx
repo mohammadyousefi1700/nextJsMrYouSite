@@ -47,7 +47,7 @@ function UserInfo(props: Props) {
         >
           <div className="relative p-1 w-full">
             <span className="">نام کاربری: </span>
-            <span>{data?.name}</span>
+            {data && <span>{data?.name}</span>}
           </div>
           <button
             type="button"

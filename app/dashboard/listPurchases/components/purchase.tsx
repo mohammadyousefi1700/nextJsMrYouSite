@@ -1,6 +1,5 @@
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import CartCustom from "@/app/components/cartStyle";
-import { ConvertDatePersian } from "@/app/components/ConvertDatePersian";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import React from "react";
 type ListPurchases = {
@@ -36,12 +35,13 @@ async function Purchase() {
     );
     return await response.data;
   };
+  
   return (
     <FetchData request={fetchDataListPurchase}>
       {(data: ListPurchases) => {
         return (
           <CartCustom mainDivClass="ml-6 sm:w-[500px] flex-col flex   xs:w-[300px]">
-            {data.documents.map((item, index) => {
+            {/* {data.documents.map((item, index) => {
               return (
                 <CartCustom
                   mainDivClass="my-2 w-full flex flex-col"
@@ -51,7 +51,7 @@ async function Purchase() {
                     {ConvertDatePersian(item.$createdAt)}
                   </span>
                   <div>
-                    {item.ListPurchase.map((itemList) => {
+                    {item.ListPurchase.map((itemList, index) => {
                       let JsonListParse: ListProductParseJson;
                       try {
                         JsonListParse = JSON.parse(itemList);
@@ -61,10 +61,10 @@ async function Purchase() {
                       }
 
                       return (
-                        <div className="flex">
-                          {JsonListParse.map((itemParse) => {
+                        <div className="flex" key={index}>
+                          {JsonListParse.map((itemParse, index) => {
                             return (
-                              <div className="flex">
+                              <div className="flex" key={index}>
                                 <img
                                   className="w-20 h-20 rounded-full"
                                   src={itemParse.images}
@@ -101,7 +101,7 @@ async function Purchase() {
                   </div>
                 </CartCustom>
               );
-            })}
+            })} */}
           </CartCustom>
         );
       }}

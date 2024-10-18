@@ -1,0 +1,22 @@
+export enum TypedColumn {
+  PaymentAndOrderFinalizationStatus = "Payment and order finalization",
+  AwaitingOrderConfirmation = "Awaiting order confirmation",
+  OrderConfirmed = "Order confirmed",
+  TheOrderWasSent = "The order was sent",
+  OrderCompletions = "Order completion",
+}
+
+export const OrderStatus: {
+  [key in
+    | TypedColumn.PaymentAndOrderFinalizationStatus
+    | TypedColumn.AwaitingOrderConfirmation
+    | TypedColumn.OrderConfirmed
+    | TypedColumn.TheOrderWasSent
+    | TypedColumn.OrderCompletions]: string;
+} = {
+  "Payment and order finalization": "پرداخت و نهایی کردن سفارش",
+  "Awaiting order confirmation": "در انتظار تایید سفارش",
+  "Order confirmed": "تایید سفارش",
+  "The order was sent": "سفارش ارسال شد",
+  "Order completion": "تکمیل سفارش",
+};

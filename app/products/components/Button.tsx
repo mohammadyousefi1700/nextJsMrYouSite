@@ -15,6 +15,9 @@ type Data = {
 
 function ButtonAddOrder(props: Data) {
   const { productPost, user } = props;
+
+  console.log("productPost", productPost);
+
   const { getProductId, decQty, incQty, products, setTotal } = useStore(
     useShallow((state) => ({
       getProductId: state.getProductId,
@@ -27,12 +30,6 @@ function ButtonAddOrder(props: Data) {
 
   const addProduct = useStore((state) => state.addProduct);
   const product = getProductId(productPost.$id);
-  const handleIsAddProduct =
-    product === undefined ||
-    products.length !== 0 ||
-    products.some((item) => {
-      item.$id === productPost.$id;
-    });
 
   useEffect(() => {
     const unSub = useStore.subscribe(
@@ -50,7 +47,19 @@ function ButtonAddOrder(props: Data) {
     if (product === undefined) {
       return (
         <button
-          onClick={() => addProduct(productPost)}
+          onClick={() =>
+            addProduct({
+              $id: productPost.$id,
+              categories: productPost.categories,
+              description: productPost.description,
+              location: productPost.location,
+              price: productPost.price,
+              productName: productPost.productName,
+              saleProvider: productPost.saleProvider,
+              images: productPost.images,
+              category: productPost.category,
+            })
+          }
           className="w-full text-white text-xl bg-[#ef4056] rounded-lg"
         >
           افزودن به سبد خرید

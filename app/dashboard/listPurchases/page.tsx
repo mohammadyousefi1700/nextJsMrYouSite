@@ -3,7 +3,7 @@ import Purchase from "./components/purchase";
 
 function ListPurchases() {
   return (
-    <div className="flex flex-col items-center gap-y-20 mt-36 ">
+    <div className="flex flex-col items-center space-y-3  mt-2 ">
       <CmpActiveOrder />
       <Purchase />
       {/* {ActiveOrder} */}

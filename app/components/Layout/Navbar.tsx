@@ -9,9 +9,7 @@ async function Navbar() {
   const ShoppingIcons = dynamic(() => import("./ShoppingIcons"), {
     ssr: false,
   });
-
   const user = await auth.getUser();
-  console.log("user", await user);
 
   async function deleteCookie() {
     "use server";
@@ -31,10 +29,7 @@ async function Navbar() {
       </Link>
       <div className=" flex gap-x-3 justify-center">
         {(await user) && <ShoppingIcons />}
-        <UserInfo
-          auth={deleteCookie}
-          data={user !== null ? await user.data : null}
-        />{" "}
+        <UserInfo auth={deleteCookie} data={user && (await user?.data)} />{" "}
       </div>
     </header>
   );

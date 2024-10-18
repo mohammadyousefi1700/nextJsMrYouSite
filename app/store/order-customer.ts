@@ -4,9 +4,11 @@ import { CartProduct, Product } from "./type";
 export type CartState = {
   products: CartProduct[];
   total: number;
+  location: string;
 };
 
 export type CartActions = {
+  addLocation: (Address: string) => void;
   addProduct: (product: Product) => void;
   removeProduct: (productId: string) => void;
   inQty: (productId: string) => void;
@@ -19,6 +21,7 @@ export type CartActions = {
 const initialState: CartState = {
   products: [],
   total: 0,
+  location: null,
 };
 
 export type CartSlice = CartState & CartActions;
@@ -92,18 +95,10 @@ export const createOrder: StateCreator<
     set((state) => {
       state.total = total;
     }),
-  // setTotalProductId: (productId) => {
-  //   set((state) => {
-  //     const foundProductId = state.products.find(
-  //       (product) => product.$id === productId
-  //     );
-  //     if (foundProductId) {
-  //       foundProductId.totalProductId += Number(
-  //         Number(foundProductId.price) * foundProductId.qty
-  //       );
-  //     }
-  //   });
-  // },
-
+  addLocation: (Address) => {
+    set((state) => {
+      state.location = Address;
+    });
+  },
   reset: () => set(() => initialState),
 });

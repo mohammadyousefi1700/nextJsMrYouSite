@@ -6,7 +6,6 @@ const axiosInstance = axios.create({
   headers: {
     "X-Appwrite-Project": process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID,
     "Content-Type": "application/json",
-    "DNS-Override": "178.22.122.100",
   },
 });
 

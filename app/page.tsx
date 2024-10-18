@@ -70,7 +70,6 @@ export default async function Home({
         "Error fetching data: ",
         error.response?.data || error.message
       );
-      // بازگشت مقدار پیش‌فرض در صورت خطا
       return { total: 0, documents: [] };
     }
   };

@@ -3,8 +3,6 @@ import { cookies } from "next/headers";
 
 export async function POST(request) {
   const { email, password } = await request.json();
-  console.log("request", request);
-
   try {
     const response = await axiosInstance.post("/account/sessions/email", {
       email,

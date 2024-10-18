@@ -55,12 +55,10 @@ export async function FetchData<T>({
     abortController,
   };
 
-  // Handling error
   if (error && handleError) {
     return <div>Error: {error}</div>;
   }
 
-  // Handling loading state
   if (loading && handleLoading) {
     return (
       <div
@@ -74,7 +72,6 @@ export async function FetchData<T>({
     );
   }
 
-  // Handling empty data
   if (
     handleEmptyData &&
     !loading &&
@@ -92,6 +89,5 @@ export async function FetchData<T>({
     );
   }
 
-  // لاگ کردن وضعیت داده‌ها برای دیباگ بهتر
   return <>{typeof children === "function" ? children(data, state) : null}</>;
 }
