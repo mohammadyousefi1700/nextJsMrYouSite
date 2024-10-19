@@ -18,6 +18,7 @@ async function CmpActiveOrder() {
       // Query.startsWith(
       //   "status",
       //   TypedColumn.PaymentAndOrderFinalizationStatus ||
+
       //     TypedColumn.AwaitingOrderConfirmation
       //   // TypedColumn.OrderConfirmed ||
       //   // TypedColumn.TheOrderWasSent
@@ -66,8 +67,14 @@ async function CmpActiveOrder() {
         return (
           data &&
           data.documents.map((item) => {
+            const dataJson = JSON.parse(item?.ordersProduct);
+            console.log(dataJson);
+
             return (
-              <CartCustom mainDivClass=" w-[400px]  px-0 flex flex-col ">
+              <CartCustom
+                key={item.$id}
+                mainDivClass=" w-[390px]  px-0 flex flex-col "
+              >
                 <div className="justify-between w-full flex">
                   <div className="text-lg pr-1">
                     {" "}
@@ -80,7 +87,20 @@ async function CmpActiveOrder() {
                   </div>
                 </div>
 
-                <div>{/* {item.} */}</div>
+                <div>
+                  {dataJson &&
+                    dataJson.map((item) => {
+                      return (
+                        <div className="gap-y-3 flex-col ">
+                          <img
+                            src={item.images}
+                            className="w-10 h-10 mt-3 rounded-full "
+                            alt=""
+                          />
+                        </div>
+                      );
+                    })}
+                </div>
               </CartCustom>
             );
           })
