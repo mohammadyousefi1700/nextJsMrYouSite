@@ -1,7 +1,6 @@
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { ConvertDatePersian } from "@/app/components/ConvertDatePersian";
 import { FetchData } from "@/app/components/FetchData/FetchData";
-import { revalidate } from "@/app/page";
 import axios from "axios";
 import Link from "next/link";
 import React from "react";
