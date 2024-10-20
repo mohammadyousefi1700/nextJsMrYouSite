@@ -5,6 +5,10 @@ import { ConvertDatePersian } from "@/app/components/ConvertDatePersian";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import { Query } from "node-appwrite";
 import React from "react";
+import DataJson from "./dataJson";
+
+const revalidate = 100000;
+revalidate;
 type ListPurchases = {
   total: number;
   documents: {
@@ -60,13 +64,10 @@ async function Purchase() {
   return (
     <FetchData request={fetchDataListPurchase}>
       {(data: ListPurchases) => {
-        console.log("data", data);
-
         return (
           <CartCustom mainDivClass="  flex-col flex  !w-[100%]">
-            {data.total > 0 ? (
+            {data && data.total > 0 ? (
               <>
-                {" "}
                 {data.documents.map((item, index) => {
                   return (
                     <CartCustom
@@ -76,59 +77,77 @@ async function Purchase() {
                       <span className="text-left">
                         {ConvertDatePersian(item.$createdAt)}
                       </span>
-                      <div>
-                        {item.ListPurchase.map((itemList, index2) => {
-                          let JsonListParse: ListProductParseJson;
-                          try {
-                            JsonListParse = JSON.parse(itemList);
-                          } catch (error) {
-                            console.error(
-                              "Invalid JSON string: ",
-                              itemList,
-                              error
-                            );
-                            return <span key={index2}>Error parsing data</span>;
-                          }
+                      {item &&
+                        item?.ListPurchase?.map((itemList) => {
+                          // console.log(itemList);
+                          // const dataJson = itemList && JSON.parse(itemList);
+                          // console.log("dataJson", dataJson);
 
                           return (
-                            <div className="flex" key={index2}>
-                              {JsonListParse.map((itemParse, index3) => {
-                                return (
-                                  <div className="flex" key={index3}>
-                                    <img
-                                      className="w-20 h-20 rounded-full"
-                                      src={itemParse.images}
-                                      alt={itemParse.productName}
-                                    />
-
-                                    <div className="flex flex-col">
-                                      <span className="mt-2">
-                                        {itemParse.productName}
-                                      </span>
-                                      <div className="flex items-center text-gray-600">
-                                        <span className="text-xl">
-                                          {itemParse.qty}
-                                        </span>
-                                        <span className="text-xl">X</span>
-                                        <span className="text-lg font-mono">
-                                          {new Intl.NumberFormat("fa-IR", {
-                                            style: "decimal",
-                                            currency: "IRR",
-                                          }).format(Number(itemParse.price))}
-                                        </span>
-                                      </div>
-                                      <span>{itemParse.location}</span>
-                                      <span>
-                                        مبلغ پرداخت شده :{" "}
-                                        {itemParse.totalProductId}
-                                      </span>
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
+                            <DataJson key={itemList.length} data={itemList} />
+                            // <div key={itemList.length && itemList.length}></div>
                           );
                         })}
+                      <div>
+                        {item &&
+                          item?.ListPurchase?.map((itemList, index2) => {
+                            let JsonListParse: ListProductParseJson;
+                            try {
+                              JsonListParse = JSON.parse(itemList);
+                            } catch (error) {
+                              console.error(
+                                "Invalid JSON string: ",
+                                itemList,
+                                error
+                              );
+                              return (
+                                <span key={index2}>Error parsing data</span>
+                              );
+                            }
+
+                            return (
+                              <div className="flex" key={index2}>
+                                {" "}
+                                {JsonListParse &&
+                                  JsonListParse.map((itemParse, index3) => {
+                                    return (
+                                      <div className="flex" key={index3}>
+                                        <img
+                                          className="w-20 h-20 rounded-full"
+                                          src={itemParse.images}
+                                          alt={itemParse.productName}
+                                        />
+
+                                        <div className="flex flex-col">
+                                          <span className="mt-2">
+                                            {itemParse.productName}
+                                          </span>
+                                          <div className="flex items-center text-gray-600">
+                                            <span className="text-xl">
+                                              {itemParse.qty}
+                                            </span>
+                                            <span className="text-xl">X</span>
+                                            <span className="text-lg font-mono">
+                                              {new Intl.NumberFormat("fa-IR", {
+                                                style: "decimal",
+                                                currency: "IRR",
+                                              }).format(
+                                                Number(itemParse.price)
+                                              )}
+                                            </span>
+                                          </div>
+                                          <span>{itemParse.location}</span>
+                                          <span>
+                                            مبلغ پرداخت شده :{" "}
+                                            {itemParse.totalProductId}
+                                          </span>
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
+                              </div>
+                            );
+                          })}
                       </div>
                     </CartCustom>
                   );
