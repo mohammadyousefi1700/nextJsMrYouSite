@@ -20,3 +20,16 @@ export const OrderStatus: {
   "The order was sent": "سفارش ارسال شد",
   "Order completion": "تکمیل سفارش",
 };
+
+export type DataJsonProduct = {
+  $id: string;
+  description: string;
+  location: string;
+  price: string;
+  productName: string;
+  saleProvider: string;
+  images: string;
+  category: string;
+  qty: number;
+  totalProductId: number;
+}[];

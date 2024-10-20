@@ -1,9 +1,8 @@
-// import auth from "@/app/auth";
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { FetchData } from "@/app/components/FetchData/FetchData";
-import { Permission, Query, Role } from "node-appwrite";
+import { Query } from "node-appwrite";
 import React from "react";
-import { OrderStatus, TypedColumn } from "../../type";
+import { DataJsonProduct, OrderStatus } from "../../type";
 import auth from "@/app/auth";
 import CartCustom from "@/app/components/cartStyle";
 import { ConvertDatePersian } from "@/app/components/ConvertDatePersian";
@@ -41,7 +40,6 @@ async function CmpActiveOrder() {
           },
         }
       );
-      // console.log(response);
 
       return response.data;
     } catch (error: any) {
@@ -55,27 +53,17 @@ async function CmpActiveOrder() {
   return (
     <FetchData request={() => fetchData()}>
       {(data) => {
-        console.log(data.documents);
-        // const HandleStatus = (status: any) => {
-        //   if (OrderStatus === status) {
-        //     console.log(OrderStatus);
-
-        //     return OrderStatus;
-        //   }
-        // };
-        // HandleStatus;
         return (
           data &&
           data.documents.map((item) => {
-            const dataJson = JSON.parse(item?.ordersProduct);
-            console.log(dataJson);
+            const dataJson: DataJsonProduct = JSON.parse(item?.ordersProduct);
 
             return (
               <CartCustom
                 key={item.$id}
-                mainDivClass=" w-[390px]  px-0 flex flex-col "
+                mainDivClass=" !w-[390px]  px-0 h-fit flex flex-col "
               >
-                <div className="justify-between w-full flex">
+                <div className="justify-between  w-full flex">
                   <div className="text-lg pr-1">
                     {" "}
                     {ConvertDatePersian(item.$createdAt)}
@@ -86,17 +74,32 @@ async function CmpActiveOrder() {
                     {OrderStatus[item.status]}
                   </div>
                 </div>
-
+                <p className="flex px-2 justify-between w-full">
+                  {" "}
+                  <span>
+                    <span>آدرس تحویل :</span> {item.customerAddress}
+                  </span>{" "}
+                  <span className="">زمان تحویل : 14:46 </span>
+                </p>
                 <div>
                   {dataJson &&
-                    dataJson.map((item) => {
+                    dataJson.map((itemJson, index) => {
                       return (
-                        <div className="gap-y-3 flex-col ">
-                          <img
-                            src={item.images}
-                            className="w-10 h-10 mt-3 rounded-full "
-                            alt=""
-                          />
+                        <div
+                          key={index}
+                          className="gap-y-3 px-2 h-fit flex w-full justify-between"
+                        >
+                          <div className="flex gap-x-2 items-center">
+                            <img
+                              src={itemJson.images}
+                              className="w-10 h-10 mt-3 rounded-full "
+                              alt=""
+                            />
+                            <div className="mt-4">
+                              <span>نام کالا :</span> {itemJson.productName}
+                            </div>{" "}
+                            {/* {item.DeliveryTime && <div>زمان تحویل : {} </div>} */}
+                          </div>
                         </div>
                       );
                     })}
