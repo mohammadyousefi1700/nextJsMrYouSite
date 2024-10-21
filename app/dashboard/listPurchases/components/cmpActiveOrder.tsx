@@ -81,11 +81,9 @@ async function CmpActiveOrder() {
                   </div>
                 </div>
                 <p className="flex px-2 justify-between w-full">
-                  {" "}
                   <span>
                     <span>آدرس تحویل :</span> {item.customerAddress}
-                  </span>{" "}
-                  <span className="">زمان تحویل : 14:46 </span>
+                  </span>
                 </p>
                 <div>
                   {dataJson &&

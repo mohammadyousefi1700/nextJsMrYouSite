@@ -1,11 +1,11 @@
-import auth from "@/app/auth";
+// import auth from "@/app/auth";
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import CartCustom from "@/app/components/cartStyle";
 import { ConvertDatePersian } from "@/app/components/ConvertDatePersian";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import { Query } from "node-appwrite";
 import React from "react";
-import DataJson from "./dataJson";
+import ItemPurchase from "./itemPurchase";
 
 const revalidate = 100000;
 revalidate;
@@ -30,7 +30,7 @@ type ListProductParseJson = {
 
 async function Purchase() {
   const fetchDataListPurchase = async (signal?: AbortSignal) => {
-    const user = (await auth.getUser()).data;
+    // const user = (await auth.getUser()).data;
 
     const queryBackend = [
       // Query.equal("user_id", userId),
@@ -69,6 +69,8 @@ async function Purchase() {
             {data && data.total > 0 ? (
               <>
                 {data.documents.map((item, index) => {
+                  console.log(item);
+
                   return (
                     <CartCustom
                       mainDivClass="my-2 w-full flex flex-col"
@@ -77,75 +79,12 @@ async function Purchase() {
                       <span className="text-left">
                         {ConvertDatePersian(item.$createdAt)}
                       </span>
-                      {item &&
-                        item?.ListPurchase?.map((itemList) => {
-                          // console.log(itemList);
-                          // const dataJson = itemList && JSON.parse(itemList);
-                          // console.log("dataJson", dataJson);
 
-                          return (
-                            <DataJson key={itemList.length} data={itemList} />
-                            // <div key={itemList.length && itemList.length}></div>
-                          );
-                        })}
                       <div>
                         {item &&
                           item?.ListPurchase?.map((itemList, index2) => {
-                            let JsonListParse: ListProductParseJson;
-                            try {
-                              JsonListParse = JSON.parse(itemList);
-                            } catch (error) {
-                              console.error(
-                                "Invalid JSON string: ",
-                                itemList,
-                                error
-                              );
-                              return (
-                                <span key={index2}>Error parsing data</span>
-                              );
-                            }
-
                             return (
-                              <div className="flex" key={index2}>
-                                {" "}
-                                {JsonListParse &&
-                                  JsonListParse.map((itemParse, index3) => {
-                                    return (
-                                      <div className="flex" key={index3}>
-                                        <img
-                                          className="w-20 h-20 rounded-full"
-                                          src={itemParse.images}
-                                          alt={itemParse.productName}
-                                        />
-
-                                        <div className="flex flex-col">
-                                          <span className="mt-2">
-                                            {itemParse.productName}
-                                          </span>
-                                          <div className="flex items-center text-gray-600">
-                                            <span className="text-xl">
-                                              {itemParse.qty}
-                                            </span>
-                                            <span className="text-xl">X</span>
-                                            <span className="text-lg font-mono">
-                                              {new Intl.NumberFormat("fa-IR", {
-                                                style: "decimal",
-                                                currency: "IRR",
-                                              }).format(
-                                                Number(itemParse.price)
-                                              )}
-                                            </span>
-                                          </div>
-                                          <span>{itemParse.location}</span>
-                                          <span>
-                                            مبلغ پرداخت شده :{" "}
-                                            {itemParse.totalProductId}
-                                          </span>
-                                        </div>
-                                      </div>
-                                    );
-                                  })}
-                              </div>
+                              <ItemPurchase key={index2} data={itemList} />
                             );
                           })}
                       </div>
@@ -154,7 +93,7 @@ async function Purchase() {
                 })}
               </>
             ) : (
-              <div>موردی </div>
+              <div>موردی یافت نشد.</div>
             )}
           </CartCustom>
         );
