@@ -69,8 +69,6 @@ async function Purchase() {
             {data && data.total > 0 ? (
               <>
                 {data.documents.map((item, index) => {
-                  console.log(item);
-
                   return (
                     <CartCustom
                       mainDivClass="my-2 w-full flex flex-col"

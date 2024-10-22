@@ -59,7 +59,7 @@ async function CmpActiveOrder() {
             // console.log("item", item);
             item?.ordersProduct.map((itemsd) => {
               const sdf = JSON.parse(itemsd);
-              console.log("sdf", sdf);
+              // console.log("sdf", sdf);
             });
             const dataJson: DataJsonProduct = JSON.parse(item?.ordersProduct);
             // console.log("item?.ordersProduct", item?.ordersProduct);

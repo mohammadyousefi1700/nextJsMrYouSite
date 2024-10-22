@@ -10,9 +10,11 @@ import { GoSync } from "react-icons/go"; // برای آیکون لودینگ
 
 function CardCalculate({ userId }: { userId: any }) {
   const { total, products, reset, location } = useStore();
+  console.log("products", products);
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  console.log(total);
+  // console.log(total);
 
   async function handleSendOrder() {
     setIsLoading(true);
