@@ -5,7 +5,6 @@ async function ItemPurchase({ data, total }: { data: any; total?: any }) {
 
   try {
     parsedData = JSON.parse(data);
-    // console.log(parsedData);
   } catch (error) {
     console.error("Invalid JSON format:", error);
   }
