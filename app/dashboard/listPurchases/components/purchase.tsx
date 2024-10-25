@@ -53,8 +53,6 @@ async function Purchase() {
   return (
     <FetchData request={fetchDataListPurchase}>
       {(data: ListPurchases) => {
-        console.log(data);
-
         return (
           <CartCustom mainDivClass="  flex-col flex  h-screen overflow-y-scroll  !w-[100%]">
             {data && data.total > 0 ? (
