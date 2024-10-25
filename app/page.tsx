@@ -43,7 +43,7 @@ export default async function Home({
       Query.offset(
         Number(
           searchParams.currentPage === undefined || null
-            ? 1
+            ? 0
             : searchParams.currentPage
         )
       ),
