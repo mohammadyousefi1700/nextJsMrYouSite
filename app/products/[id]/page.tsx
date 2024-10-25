@@ -1,8 +1,6 @@
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import { HandleSeparateThreeDigits } from "@/app/components/SeparateThreeDigits";
-import { Query } from "node-appwrite";
-// import Comment from "../components/comment";
 import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
 import { Metadata } from "next";
