@@ -1,4 +1,3 @@
-// import auth from "@/app/auth";
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import CartCustom from "@/app/components/cartStyle";
 import { ConvertDatePersian } from "@/app/components/ConvertDatePersian";
@@ -6,6 +5,7 @@ import { FetchData } from "@/app/components/FetchData/FetchData";
 import { Query } from "node-appwrite";
 import React from "react";
 import ItemPurchase from "./itemPurchase";
+import auth from "@/app/auth";
 
 const revalidate = 100000;
 revalidate;
@@ -30,20 +30,9 @@ type ListProductParseJson = {
 
 async function Purchase() {
   const fetchDataListPurchase = async (signal?: AbortSignal) => {
-    // const user = (await auth.getUser()).data;
+    const user = (await auth.getUser()).data;
 
-    const queryBackend = [
-      // Query.equal("user_id", userId),
-      // Query.startsWith(
-      //   "status",
-      //   TypedColumn.PaymentAndOrderFinalizationStatus ||
-      //     TypedColumn.AwaitingOrderConfirmation
-      //   // TypedColumn.OrderConfirmed ||
-      //   // TypedColumn.TheOrderWasSent
-      // ),
-      // Query.startsWith("userIdBuyer", "6664a58cb5533e374013"),
-      // Query.startsWith("user_Id", await user.$id),
-    ];
+    const queryBackend = [Query.startsWith("user_Id", await user.$id)];
 
     const response = await axiosInstance.get(
       `/databases/${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}/collections/${process.env.NEXT_LISTPURCHASE_API}/documents`,
@@ -64,6 +53,8 @@ async function Purchase() {
   return (
     <FetchData request={fetchDataListPurchase}>
       {(data: ListPurchases) => {
+        console.log(data);
+
         return (
           <CartCustom mainDivClass="  flex-col flex  h-screen overflow-y-scroll  !w-[100%]">
             {data && data.total > 0 ? (

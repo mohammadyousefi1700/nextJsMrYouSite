@@ -2,9 +2,15 @@ import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { ConvertDatePersian } from "@/app/components/ConvertDatePersian";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import axios from "axios";
+import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
 import { GiSwordsEmblem } from "react-icons/gi";
+
+export const metadata: Metadata = {
+  title: "صحفه پرداخت",
+};
+
 async function PaymentPage({ params }: { params: { id: string } }) {
   const fetchDocumentId = async () => {
     try {

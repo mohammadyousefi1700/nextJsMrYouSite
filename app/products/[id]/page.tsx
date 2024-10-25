@@ -2,9 +2,14 @@ import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import { HandleSeparateThreeDigits } from "@/app/components/SeparateThreeDigits";
 import { Query } from "node-appwrite";
-import Comment from "../components/comment";
+// import Comment from "../components/comment";
 import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "جزئیات محصول",
+};
 
 export default async function ProductPage({
   params,
@@ -41,14 +46,14 @@ export default async function ProductPage({
   const AllRequest = async (abortSignal?: AbortSignal) => {
     return Promise.all([
       fetchDocumentId(id, abortSignal),
-      fetchPerformanceSalesRequest(abortSignal),
+      // fetchPerformanceSalesRequest(abortSignal),
     ]);
   };
   return (
     <FetchData request={AllRequest}>
       {(data) => {
         return (
-          <div className="flex mb-20 mt-14 w-full flex-col justify-center items-center ">
+          <div className="flex font-sans text-md font-normal mb-20 mt-14 w-full flex-col justify-center items-center ">
             <div className="flex sm:flex-col xs:flex-col sm:items-center xs:items-center justify-evenly items-end w-full">
               <div className="lg:w-96 xs:order-last sm:order-last md:w-96 flex flex-col h-fit mt-11 px-2 py-2 gap-y-1 xl:w-[400px] sm:w-80 xs:w-60  items-start  object-cover  border-box rounded-lg border-2 shadow-yellow-300 shadow-2xl">
                 <span className="border-b-2 w-full shadow-yellow-100 shadow-md ">

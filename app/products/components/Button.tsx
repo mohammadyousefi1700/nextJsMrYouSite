@@ -58,7 +58,7 @@ function ButtonAddOrder(props: Data) {
               category: productPost.category,
             })
           }
-          className="w-full text-white text-xl bg-[#ef4056] rounded-lg"
+          className="w-full text-white text-center pb-1 text-xl bg-[#ef4056] rounded-lg"
         >
           افزودن به سبد خرید
         </button>

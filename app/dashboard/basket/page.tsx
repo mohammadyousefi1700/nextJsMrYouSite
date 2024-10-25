@@ -1,6 +1,11 @@
 import auth from "@/app/auth";
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "سبد خرید",
+};
 
 export default async function Basket() {
   const CardProduct = dynamic(() => import("./components/CardProduct"), {

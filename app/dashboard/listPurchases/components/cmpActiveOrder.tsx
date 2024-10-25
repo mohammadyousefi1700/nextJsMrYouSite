@@ -11,20 +11,7 @@ async function CmpActiveOrder() {
   const user = (await auth.getUser()).data;
 
   const fetchData = async () => {
-    const queryBackend = [
-      // Query.equal("user_id", userId),
-
-      // Query.startsWith(
-      //   "status",
-      //   TypedColumn.PaymentAndOrderFinalizationStatus ||
-
-      //     TypedColumn.AwaitingOrderConfirmation
-      //   // TypedColumn.OrderConfirmed ||
-      //   // TypedColumn.TheOrderWasSent
-      // ),
-      // Query.startsWith("userIdBuyer", "6664a58cb5533e374013"),
-      Query.startsWith("userIdBuyer", await user.$id),
-    ];
+    const queryBackend = [Query.startsWith("userIdBuyer", await user.$id)];
 
     try {
       const response = await axiosInstance.get(

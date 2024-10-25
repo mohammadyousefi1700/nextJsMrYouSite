@@ -74,41 +74,6 @@ function CardProduct() {
                 </button>
               </div>
             </div>
-            // <div className={`flex gap-x-2 ${index > 0 && "border-t-2"}`}>
-            //   <img
-            //     src={item.images}
-            //     alt="img"
-            //     className="w-20 h-20 mb-2 border-4 rounded-lg shadow-xl mt-2"
-            //   />
-            //   <div className="flex flex-col mt-2">
-            //     <span>{item.productName}</span>
-            //     <span className="text-xs text-gray-600  ">
-            //       {item.description}
-            //     </span>
-            //     <span className="font-mono">
-            //       {`${HandleSeparateThreeDigits2(item.price)}` +
-            //         "x" +
-            //         HandleSeparateThreeDigits2(item.qty)}
-            //     </span>
-            //     <div className="flex  w-full !text-white gap-x-3 justify-center">
-            //       <button
-            //         onClick={() => incQty(item.$id)}
-            //         className="w-12 bg-[#ef4056] rounded-lg"
-            //       >
-            //         +
-            //       </button>
-            //       <span className="text-slate-900 font-medium rounded-lg text-center bg-white px-3 border-2">
-            //         {item && <p> {item.qty}</p>}
-            //       </span>
-            //       <button
-            //         onClick={() => decQtys(item.$id)}
-            //         className="w-12 bg-gray-400 rounded-lg"
-            //       >
-            //         -
-            //       </button>
-            //     </div>
-            //   </div>
-            // </div>
           );
         })
       ) : (

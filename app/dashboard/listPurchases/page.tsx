@@ -1,7 +1,12 @@
+import { Metadata } from "next";
 import CmpActiveOrder from "./components/cmpActiveOrder";
 import Purchase from "./components/purchase";
 
 export const revalidate = 700; // revalidate at most every hour
+
+export const metadata: Metadata = {
+  title: "خرید ها",
+};
 
 async function ListPurchases() {
   return (
