@@ -1,12 +1,11 @@
 "use client";
-import auth from "@/app/auth";
 import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { HandleSeparateThreeDigits2 } from "@/app/components/SeparateThreeDigits";
 import { useStore } from "@/app/store/store";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { GoSync } from "react-icons/go"; // برای آیکون لودینگ
+import { GoSync } from "react-icons/go";
 
 function CardCalculate({ userId }: { userId: any }) {
   const { total, products, reset, location } = useStore();

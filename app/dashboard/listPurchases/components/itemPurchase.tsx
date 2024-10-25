@@ -1,6 +1,6 @@
 import React from "react";
 
-async function ItemPurchase({ data, total }: { data: any; total?: any }) {
+async function ItemPurchase({ data }: { data: any }) {
   let parsedData: any[] = [];
 
   try {

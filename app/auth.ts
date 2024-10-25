@@ -1,5 +1,4 @@
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import axiosInstance from "./axiosInstance/axiosInctance";
 
 const auth = {

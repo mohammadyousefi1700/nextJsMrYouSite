@@ -33,21 +33,8 @@ export default async function ProductPage({
     return response.data;
   };
 
-  const fetchPerformanceSalesRequest = async (signal?: AbortSignal) => {
-    const responseComments = await axiosInstance.get(
-      `/databases/${process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID}/collections/${process.env.NEXT_SCORE_SALES}/documents`,
-      {
-        params: [Query.startsWith("id", "66edf17dceb196d3f92e")],
-        signal,
-      }
-    );
-    return responseComments.data;
-  };
   const AllRequest = async (abortSignal?: AbortSignal) => {
-    return Promise.all([
-      fetchDocumentId(id, abortSignal),
-      // fetchPerformanceSalesRequest(abortSignal),
-    ]);
+    return Promise.all([fetchDocumentId(id, abortSignal)]);
   };
   return (
     <FetchData request={AllRequest}>

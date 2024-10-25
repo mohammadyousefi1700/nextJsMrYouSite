@@ -17,16 +17,6 @@ type ListPurchases = {
     $createdAt: string;
   }[];
 };
-type ListProductParseJson = {
-  description?: string;
-  location?: string;
-  price?: string;
-  images?: string;
-  productName?: string;
-  saleProvider?: string;
-  qty?: number;
-  totalProductId?: string;
-}[];
 
 async function Purchase() {
   const fetchDataListPurchase = async (signal?: AbortSignal) => {
