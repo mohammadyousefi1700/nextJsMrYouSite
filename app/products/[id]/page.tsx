@@ -2,7 +2,6 @@ import axiosInstance from "@/app/axiosInstance/axiosInctance";
 import { FetchData } from "@/app/components/FetchData/FetchData";
 import { HandleSeparateThreeDigits } from "@/app/components/SeparateThreeDigits";
 import { Query } from "node-appwrite";
-// import ButtonAddOrder from "../components/Button";
 import Comment from "../components/comment";
 import dynamic from "next/dynamic";
 import { cookies } from "next/headers";
@@ -48,8 +47,6 @@ export default async function ProductPage({
   return (
     <FetchData request={AllRequest}>
       {(data) => {
-        // console.log(data);
-
         return (
           <div className="flex mb-20 mt-14 w-full flex-col justify-center items-center ">
             <div className="flex sm:flex-col xs:flex-col sm:items-center xs:items-center justify-evenly items-end w-full">
@@ -84,16 +81,6 @@ export default async function ProductPage({
                 </span>
                 <ButtonAddOrder user={user as any} productPost={data[0]} />
               </div>
-            </div>
-
-            <div className="flex items-center mt-20 flex-col w-full">
-              {/* <textarea className="w-96 h-52 xs:px-5 xs:w-80 resize-none outline-none  rounded-lg border-[3px] bg-white" />
-              <div className="flex mr-64 xs:mr-48 mt-5 gap-x-4 !text-white font-normal">
-                <button className="w-12 bg-gray-400 rounded-lg">لغو</button>
-                <button className="w-12 bg-[#ef4056] rounded-lg">ثبت</button>
-              </div> */}
-              <p className="font-medium text-2xl mt-4">نظرات</p>
-              <Comment documents={data[1].documents} />
             </div>
           </div>
         );

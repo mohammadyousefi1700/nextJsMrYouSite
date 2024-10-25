@@ -13,7 +13,7 @@ async function ItemPurchase({ data, total }: { data: any; total?: any }) {
     parsedData &&
     parsedData.map((item) => {
       return (
-        <div key={item} className="flex">
+        <div key={item.productName} className="flex">
           <img
             className="w-20 h-20 rounded-full"
             src={item.images}
@@ -33,7 +33,15 @@ async function ItemPurchase({ data, total }: { data: any; total?: any }) {
               </span>
             </div>
             <span>{item.location}</span>
-            <span>مبلغ پرداخت شده : {item.totalProductId}</span>
+            <span>
+              مبلغ پرداخت شده :
+              <span className="text-lg font-mono">
+                {new Intl.NumberFormat("fa-IR", {
+                  style: "decimal",
+                  currency: "IRR",
+                }).format(Number(item.totalProductId))}
+              </span>
+            </span>
           </div>
         </div>
       );

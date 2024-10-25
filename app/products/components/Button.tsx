@@ -16,8 +16,6 @@ type Data = {
 function ButtonAddOrder(props: Data) {
   const { productPost, user } = props;
 
-  console.log("productPost", productPost);
-
   const { getProductId, decQty, incQty, setTotal } = useStore(
     useShallow((state) => ({
       getProductId: state.getProductId,

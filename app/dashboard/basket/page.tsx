@@ -20,7 +20,6 @@ export default async function Basket() {
     }
   );
   const user = await (await auth.getUser()).data;
-  console.log(user);
 
   return (
     <div className="mt-16 md:max-h-screen xs:max-h-screen xs:mt-24 sm:mt-24  sm:max-h-screen md:overflow-y-scroll xs:overflow-y-scroll sm:overflow-y-scroll">

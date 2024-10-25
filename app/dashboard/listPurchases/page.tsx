@@ -17,7 +17,8 @@ async function ListPurchases() {
           <CmpActiveOrder />
         </div>
         <div className="w-full px-9">
-          <Purchase />
+          {" "}
+          <Purchase />{" "}
         </div>
       </div>
     </div>

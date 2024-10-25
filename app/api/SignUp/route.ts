@@ -36,7 +36,6 @@ export async function POST(request) {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    // console.error("Error logging in:", error);
     console.log("error.message", error.message);
 
     return new Response(JSON.stringify({ error: error.message }), {
